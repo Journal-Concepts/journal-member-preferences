@@ -1,1 +1,1 @@
-# journal-member-locker
+# Journal Member Locker
