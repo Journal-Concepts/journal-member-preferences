@@ -10,18 +10,18 @@
  *
  * @link              21applications.com
  * @since             1.0.0
- * @package           Jc_Member_Locker
+ * @package           JC_Member_Preferences
  *
  * @wordpress-plugin
  * Plugin Name:       Journal Member Locker
- * Plugin URI:        git@github.com:rogercoathup/journal-member-locker.git
+ * Plugin URI:        git@github.com:rogercoathup/journal-member-preferences.git
  * Description:       The member locker page in My Account - provides frame for other features to add content, e.g. referrals, partner program
  * Version:           1.0.0
  * Author:            Roger Coathup
  * Author URI:        21applications.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       jc-member-locker
+ * Text Domain:       jc-member-preferences
  * Domain Path:       /languages
  */
 
@@ -35,34 +35,34 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'JC_MEMBER_LOCKER_VERSION', '1.0.0' );
+define( 'JC_MEMBER_PREFERENCES_VERSION', '1.0.0' );
 
 /**
  * The code that runs during plugin activation.
- * This action is documented in includes/class-jc-member-locker-activator.php
+ * This action is documented in includes/class-jc-member-preferences-activator.php
  */
-function activate_jc_member_locker() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-jc-member-locker-activator.php';
-	Jc_Member_Locker_Activator::activate();
+function activate_jc_member_preferences() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-jc-member-preferences-activator.php';
+	JC_Member_Preferences_Activator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
- * This action is documented in includes/class-jc-member-locker-deactivator.php
+ * This action is documented in includes/class-jc-member-preferences-deactivator.php
  */
-function deactivate_jc_member_locker() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-jc-member-locker-deactivator.php';
-	Jc_Member_Locker_Deactivator::deactivate();
+function deactivate_jc_member_preferences() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-jc-member-preferences-deactivator.php';
+	JC_Member_Preferences_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_jc_member_locker' );
-register_deactivation_hook( __FILE__, 'deactivate_jc_member_locker' );
+register_activation_hook( __FILE__, 'activate_jc_member_preferences' );
+register_deactivation_hook( __FILE__, 'deactivate_jc_member_preferences' );
 
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-jc-member-locker.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class-jc-member-preferences.php';
 
 /**
  * Begins execution of the plugin.
@@ -73,10 +73,10 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-jc-member-locker.php';
  *
  * @since    1.0.0
  */
-function run_jc_member_locker() {
+function run_jc_member_preferences() {
 
-	$plugin = new Jc_Member_Locker();
+	$plugin = new JC_Member_Preferences();
 	$plugin->run();
 
 }
-run_jc_member_locker();
+run_jc_member_preferences();

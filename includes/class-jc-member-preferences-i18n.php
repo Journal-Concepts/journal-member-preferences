@@ -9,8 +9,8 @@
  * @link       21applications.com
  * @since      1.0.0
  *
- * @package    Jc_Member_Locker
- * @subpackage Jc_Member_Locker/includes
+ * @package    JC_Member_Preferences
+ * @subpackage JC_Member_Preferences/includes
  */
 
 /**
@@ -20,11 +20,11 @@
  * so that it is ready for translation.
  *
  * @since      1.0.0
- * @package    Jc_Member_Locker
- * @subpackage Jc_Member_Locker/includes
+ * @package    JC_Member_Preferences
+ * @subpackage JC_Member_Preferences/includes
  * @author     Roger Coathup <roger@21applications.com>
  */
-class Jc_Member_Locker_i18n {
+class JC_Member_Preferences_i18n {
 
 
 	/**
@@ -35,7 +35,7 @@ class Jc_Member_Locker_i18n {
 	public function load_plugin_textdomain() {
 
 		load_plugin_textdomain(
-			'jc-member-locker',
+			'jc-member-preferences',
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);

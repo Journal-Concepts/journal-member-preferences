@@ -11,13 +11,13 @@
  */
 class JC_Member_Locker_Query extends WC_Query {
 
-	protected $url = 'member-locker';
+	protected $url = 'member-preferences';
 	protected $name = 'Member Locker';
 
 	public function __construct() {
 
 		$options = get_option( 'jc_optionslocker' );
-		$this->url = isset( $options['url'] ) ? $options['url'] : 'member-locker';
+		$this->url = isset( $options['url'] ) ? $options['url'] : 'member-preferences';
 		$this->name = isset( $options['name'] ) ? $options['name'] : 'Member Locker';
 
 		add_action( 'init', [ $this, 'add_endpoints' ] );
@@ -25,7 +25,7 @@ class JC_Member_Locker_Query extends WC_Query {
 		if ( ! is_admin() ) {
 
 			add_filter( 'query_vars', [ $this, 'add_query_vars' ], 0 );
-			add_filter( 'woocommerce_get_query_vars', [ $this, 'add_jc_member_locker_query_vars' ] );
+			add_filter( 'woocommerce_get_query_vars', [ $this, 'add_jc_member_preferences_query_vars' ] );
 
 			// Inserting your new tab/page into the My Account page.
 			add_filter( 'woocommerce_endpoint_'  . $this->url . '_title', array($this, 'title'), 0);
@@ -107,7 +107,7 @@ class JC_Member_Locker_Query extends WC_Query {
 	 */
 	public function endpoint_content( $current_page = 1 ) {
 
-		do_action( 'jc_member_locker', get_current_user_id() );
+		do_action( 'jc_member_preferences', get_current_user_id() );
 
 	}
 
@@ -120,7 +120,7 @@ class JC_Member_Locker_Query extends WC_Query {
 	 * @return array
 	 * @since  2.3.0
 	 */
-	public function add_jc_member_locker_query_vars( $query_vars ) {
+	public function add_jc_member_preferences_query_vars( $query_vars ) {
 		return array_merge( $query_vars, $this->query_vars );
 	}
 

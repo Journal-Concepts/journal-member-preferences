@@ -6,8 +6,8 @@
  * @link       21applications.com
  * @since      1.0.0
  *
- * @package    Jc_Member_Locker
- * @subpackage Jc_Member_Locker/includes
+ * @package    JC_Member_Preferences
+ * @subpackage JC_Member_Preferences/includes
  */
 
 /**
@@ -16,11 +16,11 @@
  * This class defines all code necessary to run during the plugin's deactivation.
  *
  * @since      1.0.0
- * @package    Jc_Member_Locker
- * @subpackage Jc_Member_Locker/includes
+ * @package    JC_Member_Preferences
+ * @subpackage JC_Member_Preferences/includes
  * @author     Roger Coathup <roger@21applications.com>
  */
-class Jc_Member_Locker_Deactivator {
+class JC_Member_Preferences_Deactivator {
 
 	/**
 	 * Short Description. (use period)

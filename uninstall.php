@@ -22,7 +22,7 @@
  * @link       21applications.com
  * @since      1.0.0
  *
- * @package    Jc_Member_Locker
+ * @package    JC_Member_Preferences
  */
 
 // If uninstall not called from WordPress, then exit.

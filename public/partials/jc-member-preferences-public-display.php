@@ -8,8 +8,8 @@
  * @link       21applications.com
  * @since      1.0.0
  *
- * @package    Jc_Member_Locker
- * @subpackage Jc_Member_Locker/public/partials
+ * @package    JC_Member_Preferences
+ * @subpackage JC_Member_Preferences/public/partials
  */
 ?>
 

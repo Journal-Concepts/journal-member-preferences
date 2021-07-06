@@ -6,8 +6,8 @@
  * @link       21applications.com
  * @since      1.0.0
  *
- * @package    Jc_Member_Locker
- * @subpackage Jc_Member_Locker/includes
+ * @package    JC_Member_Preferences
+ * @subpackage JC_Member_Preferences/includes
  */
 
 /**
@@ -17,11 +17,11 @@
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    Jc_Member_Locker
- * @subpackage Jc_Member_Locker/includes
+ * @package    JC_Member_Preferences
+ * @subpackage JC_Member_Preferences/includes
  * @author     Roger Coathup <roger@21applications.com>
  */
-class Jc_Member_Locker_Loader {
+class JC_Member_Preferences_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.

@@ -6,8 +6,8 @@
  * @link       21applications.com
  * @since      1.0.0
  *
- * @package    Jc_Member_Locker
- * @subpackage Jc_Member_Locker/admin
+ * @package    JC_Member_Preferences
+ * @subpackage JC_Member_Preferences/admin
  */
 
 /**
@@ -16,11 +16,11 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    Jc_Member_Locker
- * @subpackage Jc_Member_Locker/admin
+ * @package    JC_Member_Preferences
+ * @subpackage JC_Member_Preferences/admin
  * @author     Roger Coathup <roger@21applications.com>
  */
-class Jc_Member_Locker_Admin {
+class JC_Member_Preferences_Admin {
 
 	/**
 	 * The ID of this plugin.
@@ -65,15 +65,15 @@ class Jc_Member_Locker_Admin {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Jc_Member_Locker_Loader as all of the hooks are defined
+		 * defined in JC_Member_Preferences_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Jc_Member_Locker_Loader will then create the relationship
+		 * The JC_Member_Preferences_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/jc-member-locker-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/jc-member-preferences-admin.css', array(), $this->version, 'all' );
 
 	}
 
@@ -88,15 +88,15 @@ class Jc_Member_Locker_Admin {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Jc_Member_Locker_Loader as all of the hooks are defined
+		 * defined in JC_Member_Preferences_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Jc_Member_Locker_Loader will then create the relationship
+		 * The JC_Member_Preferences_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/jc-member-locker-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/jc-member-preferences-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
 
@@ -130,7 +130,7 @@ class Jc_Member_Locker_Admin {
 			'name' => __( 'Member Locker URL', 'journal-partner-program' ),
 			'id' => 'url',
 			'type' => 'text',
-			'default' => 'member-locker'
+			'default' => 'member-preferences'
 		]);
 	}
 

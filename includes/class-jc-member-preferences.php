@@ -9,8 +9,8 @@
  * @link       21applications.com
  * @since      1.0.0
  *
- * @package    Jc_Member_Locker
- * @subpackage Jc_Member_Locker/includes
+ * @package    JC_Member_Preferences
+ * @subpackage JC_Member_Preferences/includes
  */
 
 /**
@@ -23,11 +23,11 @@
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    Jc_Member_Locker
- * @subpackage Jc_Member_Locker/includes
+ * @package    JC_Member_Preferences
+ * @subpackage JC_Member_Preferences/includes
  * @author     Roger Coathup <roger@21applications.com>
  */
-class Jc_Member_Locker {
+class JC_Member_Preferences {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -35,7 +35,7 @@ class Jc_Member_Locker {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Jc_Member_Locker_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      JC_Member_Preferences_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -67,12 +67,12 @@ class Jc_Member_Locker {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'JC_MEMBER_LOCKER_VERSION' ) ) {
-			$this->version = JC_MEMBER_LOCKER_VERSION;
+		if ( defined( 'JC_MEMBER_PREFERENCES_VERSION' ) ) {
+			$this->version = JC_MEMBER_PREFERENCES_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}
-		$this->plugin_name = 'jc-member-locker';
+		$this->plugin_name = 'jc-member-preferences';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -86,10 +86,10 @@ class Jc_Member_Locker {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - Jc_Member_Locker_Loader. Orchestrates the hooks of the plugin.
-	 * - Jc_Member_Locker_i18n. Defines internationalization functionality.
-	 * - Jc_Member_Locker_Admin. Defines all hooks for the admin area.
-	 * - Jc_Member_Locker_Public. Defines all hooks for the public side of the site.
+	 * - JC_Member_Preferences_Loader. Orchestrates the hooks of the plugin.
+	 * - JC_Member_Preferences_i18n. Defines internationalization functionality.
+	 * - JC_Member_Preferences_Admin. Defines all hooks for the admin area.
+	 * - JC_Member_Preferences_Public. Defines all hooks for the public side of the site.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -103,28 +103,28 @@ class Jc_Member_Locker {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-jc-member-locker-loader.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-jc-member-preferences-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-jc-member-locker-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-jc-member-preferences-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-jc-member-locker-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-jc-member-preferences-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-jc-member-locker-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-jc-member-preferences-public.php';
 
 		add_action( 'plugins_loaded', array( $this, 'load_dependant_classes' ), 99 );
 
-		$this->loader = new Jc_Member_Locker_Loader();
+		$this->loader = new JC_Member_Preferences_Loader();
 
 	}
 
@@ -136,7 +136,7 @@ class Jc_Member_Locker {
 	public function load_dependant_classes() {
 
 		if ( is_woocommerce_active() ) {
-			require_once plugin_dir_path( dirname( __FILE__ ) ) . '/includes/class-jc-member-locker-query.php';
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . '/includes/class-jc-member-preferences-query.php';
 			new JC_Member_Locker_Query();
 		}
 	}
@@ -145,7 +145,7 @@ class Jc_Member_Locker {
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Jc_Member_Locker_i18n class in order to set the domain and to register the hook
+	 * Uses the JC_Member_Preferences_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -153,7 +153,7 @@ class Jc_Member_Locker {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Jc_Member_Locker_i18n();
+		$plugin_i18n = new JC_Member_Preferences_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
@@ -168,7 +168,7 @@ class Jc_Member_Locker {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Jc_Member_Locker_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new JC_Member_Preferences_Admin( $this->get_plugin_name(), $this->get_version() );
 		$this->loader->add_action( 'journal_options_fields', $plugin_admin, 'register_options', 10, 2 );
 
 	}
@@ -182,7 +182,7 @@ class Jc_Member_Locker {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Jc_Member_Locker_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new JC_Member_Preferences_Public( $this->get_plugin_name(), $this->get_version() );
 
 	}
 
@@ -210,7 +210,7 @@ class Jc_Member_Locker {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    Jc_Member_Locker_Loader    Orchestrates the hooks of the plugin.
+	 * @return    JC_Member_Preferences_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;
