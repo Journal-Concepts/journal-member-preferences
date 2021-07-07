@@ -1,32 +1,58 @@
 (function( $ ) {
 	'use strict';
 
-	/**
-	 * All of the code for your public-facing JavaScript source
-	 * should reside in this file.
-	 *
-	 * Note: It has been assumed you will write jQuery code here, so the
-	 * $ function reference has been prepared for usage within the scope
-	 * of this function.
-	 *
-	 * This enables you to define handlers, for when the DOM is ready:
-	 *
-	 * $(function() {
-	 *
-	 * });
-	 *
-	 * When the window is loaded:
-	 *
-	 * $( window ).load(function() {
-	 *
-	 * });
-	 *
-	 * ...and/or other possibilities.
-	 *
-	 * Ideally, it is not considered best practise to attach more than a
-	 * single DOM-ready or window-load handler for a particular page.
-	 * Although scripts in the WordPress core, Plugins and Themes may be
-	 * practising this, we should strive to set a better example in our own work.
-	 */
+	function setPreference( nonce, value ) {
+
+		var options = {
+			message: "Setting your putter type preference"
+		};
+
+
+		HoldOn.open(options);
+
+		var params = {
+			action: 'jc_set_putter_type',
+			putter_type: value,
+			nonce: nonce
+		}
+
+		$.post( jc_member_preferences.ajaxurl, params, function( result ) {
+
+			var status = $(result).find( 'response_data' ).text();
+			var message = $(result).find( 'supplemental message' ).text();
+			var $messageBox = $('.message');
+
+			if ( status === 'success' ) {
+
+				$messageBox.removeClass('alert').addClass('success');
+				$messageBox.html( message ).slideDown();
+				$('.putter-type-preference').hide();
+				HoldOn.close();
+
+			} else {
+
+				$messageBox.html( message ).slideDown();
+				HoldOn.close();
+			}
+
+		});
+
+
+	}
+
+    $(function() {
+
+		$('.putter-type-preference').submit( function(e) {
+
+			e.preventDefault();
+
+			var value = $("[name='putter-type']:checked").val();
+			var nonce = $("#_wpnonce").val();
+			setPreference( nonce, value );
+
+		});
+
+    });	
+
 
 })( jQuery );

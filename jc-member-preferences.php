@@ -13,9 +13,9 @@
  * @package           JC_Member_Preferences
  *
  * @wordpress-plugin
- * Plugin Name:       Journal Member Locker
+ * Plugin Name:       Journal Member Preferences
  * Plugin URI:        git@github.com:rogercoathup/journal-member-preferences.git
- * Description:       The member locker page in My Account - provides frame for other features to add content, e.g. referrals, partner program
+ * Description:       Support for member preferences, panel in admin, mallet vs blade selection & redemption, etc.
  * Version:           1.0.0
  * Author:            Roger Coathup
  * Author URI:        21applications.com

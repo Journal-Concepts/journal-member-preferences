@@ -78,6 +78,7 @@ class JC_Member_Preferences {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+		$this->define_block_hooks();
 
 	}
 
@@ -122,6 +123,8 @@ class JC_Member_Preferences {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-jc-member-preferences-public.php';
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'blocks/putter-type.php';
+
 		add_action( 'plugins_loaded', array( $this, 'load_dependant_classes' ), 99 );
 
 		$this->loader = new JC_Member_Preferences_Loader();
@@ -137,7 +140,7 @@ class JC_Member_Preferences {
 
 		if ( is_woocommerce_active() ) {
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . '/includes/class-jc-member-preferences-query.php';
-			new JC_Member_Locker_Query();
+			new JC_Member_Preferences_Query();
 		}
 	}
 
@@ -169,7 +172,6 @@ class JC_Member_Preferences {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new JC_Member_Preferences_Admin( $this->get_plugin_name(), $this->get_version() );
-		$this->loader->add_action( 'journal_options_fields', $plugin_admin, 'register_options', 10, 2 );
 
 	}
 
@@ -182,8 +184,26 @@ class JC_Member_Preferences {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new JC_Member_Preferences_Public( $this->get_plugin_name(), $this->get_version() );
 
+		$plugin_public = new JC_Member_Preferences_Public( $this->get_plugin_name(), $this->get_version() );
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
+	}
+
+	/**
+	 * Undocumented function
+	 *
+	 * @return void
+	 */
+	private function define_block_hooks() {
+
+		$block = new JC_Member_Preferences_Putter_Type( $this->get_plugin_name(), $this->get_version() );
+
+		$this->loader->add_action( 'init', $block, 'enqueue_styles' );
+		$this->loader->add_action( 'init', $block, 'enqueue_scripts' );
+		$this->loader->add_action( 'init', $block, 'register' );
+		$this->loader->add_action( 'wp_ajax_nopriv_jc_set_putter_type', $block, 'handle_submission' );
+		$this->loader->add_action( 'wp_ajax_jc_set_putter_type', $block, 'handle_submission' );
 	}
 
 	/**

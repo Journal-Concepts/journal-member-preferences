@@ -100,38 +100,5 @@ class JC_Member_Preferences_Admin {
 
 	}
 
-	/**
-	 * Undocumented function
-	 *
-	 * @param [type] $cmb
-	 * @param [type] $parent_slug
-	 * @return void
-	 */
-	public function register_options( $cmb, $parent_slug ) {
-
-		$options = new_cmb2_box( [
-			'id'         => 'journal_locker',
-			'title' 	=> 'Member Locker',
-			'object_types'    => [ 'options-page' ],
-			'option_key' => $parent_slug . 'locker',
-			'parent_slug' => $parent_slug,
-			'tab_group' => $parent_slug,
-			'tab_title' => 'Member Locker'
-		] );
-
-		$options->add_field( [
-			'name' => __( 'Member Locker Name', 'journal-partner-program' ),
-			'id' => 'name',
-			'type' => 'text',
-			'default' => 'Member Locker'
-		]);
-
-		$options->add_field( [
-			'name' => __( 'Member Locker URL', 'journal-partner-program' ),
-			'id' => 'url',
-			'type' => 'text',
-			'default' => 'member-preferences'
-		]);
-	}
 
 }

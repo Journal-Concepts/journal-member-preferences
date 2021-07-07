@@ -61,19 +61,7 @@ class JC_Member_Preferences_Public {
 	 */
 	public function enqueue_styles() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in JC_Member_Preferences_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The JC_Member_Preferences_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/jc-member-preferences-public.css', array(), $this->version, 'all' );
+		wp_register_style( 'journal-member-preferences-public', plugin_dir_url( __FILE__ ) . 'css/jc-member-preferences-public.css', array(), $this->version, 'all' );
 
 	}
 
@@ -84,20 +72,19 @@ class JC_Member_Preferences_Public {
 	 */
 	public function enqueue_scripts() {
 
+		$protocol = isset( $_SERVER["HTTPS"]) ? 'https://' : 'http://';
+
 		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in JC_Member_Preferences_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The JC_Member_Preferences_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
+		 * Our general public js
+		 * @var array
 		 */
+		$params = array(
+			'ajaxurl' => admin_url( 'admin-ajax.php', $protocol ),
+		);
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/jc-member-preferences-public.js', array( 'jquery' ), $this->version, false );
 
+		wp_register_script( 'journal-member-preferences-public', plugin_dir_url( __FILE__ ) . 'js/jc-member-preferences-public.js' );
+		wp_localize_script( 'journal-member-preferences-public', 'jc_member_preferences' , $params );
 	}
 
 }

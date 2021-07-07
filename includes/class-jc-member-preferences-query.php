@@ -9,16 +9,12 @@
  * @subpackage JC_Member_Locker/includes
  * @author     Roger Coathup <roger@21applications.com>
  */
-class JC_Member_Locker_Query extends WC_Query {
+class JC_Member_Preferences_Query extends WC_Query {
 
 	protected $url = 'member-preferences';
-	protected $name = 'Member Locker';
+	protected $name = 'Member Preferences';
 
 	public function __construct() {
-
-		$options = get_option( 'jc_optionslocker' );
-		$this->url = isset( $options['url'] ) ? $options['url'] : 'member-preferences';
-		$this->name = isset( $options['name'] ) ? $options['name'] : 'Member Locker';
 
 		add_action( 'init', [ $this, 'add_endpoints' ] );
 
@@ -66,12 +62,12 @@ class JC_Member_Locker_Query extends WC_Query {
 		global $wp;
 
 		if ( is_main_query() && is_page() && isset( $wp->query_vars[ $query_var ] ) ) {
-			$partner_program_query = true;
+			$query = true;
 		} else {
-			$partner_program_query = false;
+			$query = false;
 		}
 
-		return $partner_program_query;
+		return $query;
 	}
 
 	/**
@@ -107,6 +103,64 @@ class JC_Member_Locker_Query extends WC_Query {
 	 */
 	public function endpoint_content( $current_page = 1 ) {
 
+		ob_start();
+
+		$user_id = get_current_user_id();
+
+		$message = false;
+
+		if ( ! empty( $_POST ) && check_admin_referer( 'jc-member-preferences' ) ) {
+
+			if ( isset( $_POST['putter-type'] ) ) {
+				update_user_meta( $user_id, 'jc_putter_type', $_POST['putter-type']);
+				$message = "Your preferences have been updated";
+			} else {
+				$message = "Updated failed";
+			}
+		}
+
+		$checked = 'blade';
+
+		if ( $user_id ) {
+			$preferred_type = get_user_meta( $user_id, 'jc_putter_type', true );
+
+			if ( $preferred_type ) {
+				$checked = $preferred_type;
+			}
+		}
+
+		?>
+
+		<div id="member-preferences">
+			<div class="inner-wrapper">
+
+				<?php
+				if ( $message ) {
+					echo '<div class="message callout">' . $message . '</div>';
+				}
+				?>
+                <form class="member-preference-form" method="post" action="#">
+
+                    <?php wp_nonce_field( 'jc-member-preferences' );?>
+					<div class="putter-type">
+						<p>Putter type:</p>
+						<div class="choices">
+							<input type="radio" id="blade" name="putter-type" value="blade" <?php 
+							if ( $checked === 'blade' ) echo 'checked';?> />
+							<label for="blade">Blade</label>
+							<input type="radio" id="mallet" name="putter-type" value="mallet" <?php 
+							if ( $checked !== 'blade' ) echo 'checked';?>/>
+							<label for="mallet">Mallet</label>
+						</div>
+					</div>
+                    <input type="submit" class="button" value="Save Preferences"/>
+                </form>
+
+			</div>
+		</div>
+
+		<?php
+		echo ob_get_clean();
 		do_action( 'jc_member_preferences', get_current_user_id() );
 
 	}

@@ -1,0 +1,48 @@
+form.putter-type-preference {
+    
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .choices {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    input[type='radio'] {
+        position: absolute !important;
+        clip: rect(0, 0, 0, 0);
+        height: 1px;
+        width: 1px;
+
+        &+label {
+            font-size: 2rem;
+            text-align: center;
+            padding: 1rem 4rem;
+            border: 2px solid #28b473;
+            margin: 0;
+            color: grey;
+            font-family: "Unica77LLWebBold", "HelveticaNeue-Bold", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &:checked+label {
+            background-color: #28b473;
+            border-color: #28b473;
+            color: white;
+        }
+    }
+
+    input[type='submit'] {
+        margin-top: 3rem;
+    }
+}
+
+
