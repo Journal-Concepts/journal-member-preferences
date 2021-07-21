@@ -172,6 +172,7 @@ class JC_Member_Preferences {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new JC_Member_Preferences_Admin( $this->get_plugin_name(), $this->get_version() );
+		$this->loader->add_action( 'journal_options_fields', $plugin_admin, 'register_options', 10, 2 );
 
 	}
 

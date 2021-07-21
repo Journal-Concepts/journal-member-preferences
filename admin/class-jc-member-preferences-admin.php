@@ -100,5 +100,31 @@ class JC_Member_Preferences_Admin {
 
 	}
 
+	
+	/**
+	 * Undocumented function
+	 *
+	 * @param [type] $cmb
+	 * @return void
+	 */
+	public function register_options( $cmb, $parent_slug ) {
+
+		$options = new_cmb2_box( [
+			'id'         => 'journal_preferences',
+			'title' 	=> 'preferences',
+			'object_types'    => [ 'options-page' ],
+			'option_key' => $parent_slug . 'preferences',
+			'parent_slug' => $parent_slug,
+			'tab_group' => $parent_slug,
+			'tab_title' => 'Preferences'
+		] );
+
+		$options->add_field( [
+			'name' => __( 'Show on front end', 'journal-preferences' ),
+			'id'  => 'show',
+			'type' => 'checkbox'
+		]);
+	}
+
 
 }

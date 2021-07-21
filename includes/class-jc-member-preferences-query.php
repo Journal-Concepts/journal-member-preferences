@@ -83,6 +83,10 @@ class JC_Member_Preferences_Query extends WC_Query {
 			return $menu_items;
 		}
 
+		if ( !jc_get_option( 'show', '', 'preferences' ) ) {
+			return $menu_items;
+		}
+
 		if ( function_exists( 'array_insert_before' ) ) {
 			$menu_items = array_insert_before( 'customer-logout', $menu_items, $this->url, $this->name );
 		} else{
