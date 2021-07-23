@@ -214,7 +214,7 @@ class JC_Member_Preferences_Putter_Type {
 		$response->add( [
 			'data' => 'success',
 			'supplemental' => [
-				'message' => sprintf('You\'re preferred putter type has been set to %1$s', $_POST['putter_type'] )
+				'message' => sprintf('Your preferred putter type has been set to <strong>%1$s</strong>.<br/>If you would like to change this, please <a href="%2$s">click here</a>', $_POST['putter_type'], get_permalink() )
 			],
 		] );
 
