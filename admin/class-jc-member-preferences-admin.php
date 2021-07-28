@@ -111,7 +111,7 @@ class JC_Member_Preferences_Admin {
 
 		$options = new_cmb2_box( [
 			'id'         => 'journal_preferences',
-			'title' 	=> 'preferences',
+			'title' 	=> 'Preferences',
 			'object_types'    => [ 'options-page' ],
 			'option_key' => $parent_slug . 'preferences',
 			'parent_slug' => $parent_slug,
@@ -124,7 +124,18 @@ class JC_Member_Preferences_Admin {
 			'id'  => 'show',
 			'type' => 'checkbox'
 		]);
-	}
 
+		$options->add_field( [
+			'name' => __( 'Blade product #', 'journal-preferences' ),
+			'id'  => 'blade_product_id',
+			'type' => 'text_small'
+		]);
+
+		$options->add_field( [
+			'name' => __( 'Mallet product #', 'journal-preferences' ),
+			'id'  => 'mallet_product_id',
+			'type' => 'text_small'
+		]);
+	}
 
 }
