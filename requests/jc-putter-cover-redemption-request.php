@@ -30,11 +30,68 @@ class JC_Putter_Cover_Redemption_Request extends JC_Async_Report_Request {
      */
 	protected function fetch_data( JC_Async_Report $report, int $step ) : array {
 
+		$context = json_decode( $report->get_context(), true );
+
+		// Check we have a redeem type specified
+		if ( !isset( $context['redeem'] ) ) {
+			wc_get_logger()->warning( 'No redemption type specified', $this->context );
+			return [];
+		}
+
+		// Maybe initialise the current stock levels
+		if ( !isset( $context['current_levels'] ) ) {
+
+			$redeem = '';
+
+			switch ( $context['redeem'] ) {
+
+				case 'blade' : 
+				case 'mallet' :
+					$redeem = $context['redeem'];
+					break;
+				case 'no-preference' :
+					$redeem = $context['no-preference-choice'] === 'mallet' ? 'mallet' : 'blade';
+					break;
+				default:
+					wc_get_logger()->warning( 'Unknown redemption type', $this->context );
+					return [];
+			}
+
+			$context['current_levels'] = $redeem === 'blade' ? 
+				[ 
+					'blade-black' => $context['blade-black'],
+					'blade-white' => $context['blade-white'],
+					'blade-green' => $context['blade-green']
+				] :
+				[ 
+					'mallet-black' => $context['mallet-black'],
+					'mallet-white' => $context['mallet-white'],
+					'mallet-tan' => $context['mallet-tan']
+				];
+
+			$report->set_context( json_encode( $context ) );
+			$report->save();
+ 
+		}
+
+		$cutoff = false;
+
+		if ( $context['redeem'] === 'no-preference' && isset( $context['cutoff'] ) ) {
+			$cutoff = $context['cutoff'];
+		}
+		
+		// Check if we've reached our stock limit
+		$level = max( $context['current_levels'] );
+
+		if ( $level <= 0 ) {
+			return [];
+		}
+
 		$offset = 1 == $step ? 0 : $this->per_step * ( $step - 1);
 
 		$data_store = WC_Data_Store::load( 'journal_premium_entitlement' );
 
-		$entitlements = $data_store->get_entitlements_for_number( 5, 'unredeemed', $this->per_step, $offset );
+		$entitlements = $data_store->get_entitlements_for_number( 5, 'unredeemed', $this->per_step, $offset, $cutoff );
 
         return $entitlements;
     }
@@ -50,20 +107,47 @@ class JC_Putter_Cover_Redemption_Request extends JC_Async_Report_Request {
     protected function process_data( array $data, JC_Async_Report $report, int $step ) : bool {
 
         $downloads = json_decode( $report->get_downloads() );
+		$context = json_decode( $report->get_context(), true );
+
+		if ( !isset( $context['redeem'] ) ) {
+			wc_get_logger()->warning( "No redemption type", $this->context );
+            return false;
+		}
+
+		$redeem = '';
+
+		switch ( $context['redeem'] ) {
+			case 'blade' :
+			case 'mallet' :
+			case 'no-preference' :
+				$redeem = $context['redeem'];
+				break;
+			default: 
+				wc_get_logger()->warning( "Unknown redemption type", $this->context );
+				return false;
+		}
 
         if ( !property_exists( $downloads[0], 'filename' ) ) {
             wc_get_logger()->warning( "No download file", $this->context );
             return false;
         }
 
-		$blade_id = jc_get_option( 'blade_product_id', false, 'preferences' );
-		$mallet_id = jc_get_option( 'mallet_product_id', false, 'preferences' );
-
         $fp = fopen( $downloads[0]->filename, 'a' );
 
 		foreach ( $data as $entitlement ) {
 
-			error_log( "Processing: " . $entitlement->get_id() );
+			$current_levels = $context['current_levels'];
+
+			// Check whether we've reached the limit
+			if ( max( $current_levels ) <= 0 ) {
+				break;
+			}
+
+			// Get the variation ID to use
+			$variation_id = 0;
+			$color = array_search( max( $context['current_levels']), $context['current_levels'] );
+
+			$variation_id = $context[$color . '-id'];
 
 			$subscription = wcs_get_subscription( $entitlement->get_subscription_id() );
 
@@ -94,21 +178,34 @@ class JC_Putter_Cover_Redemption_Request extends JC_Async_Report_Request {
 				$preference = get_user_meta( $subscription->get_customer_id(), 'jc_putter_type', true );
 			}
 
-			$product_id = $preference === 'mallet' ? $mallet_id : $blade_id;
+			// Only process where preference matches the redemption type
+			// Handle no preference
+			if ( ( $context['redeem'] === 'no-preference' ) && $preference ) {
+				continue;
+			}
+		
+			if ( ( $context['redeem'] !== 'no-preference' ) && ( $preference !== $redeem ) ) {
+				continue;
+			}
 
-			$product = wc_get_product( $product_id );
+			$product = wc_get_product( $variation_id );
+
+			if ( !$product ) {
+				wc_get_logger()->warning( 'No a product for ' . $variation_id, $this->context );
+				continue;
+			}
 
 			$order_id = journal_create_redemption_order( $entitlement, $product );
 
-			error_log( "Order $order_id" );
 
 			$entitlement->set_redemption_order_id( $order_id );
 			$entitlement->set_redemption_date( date( 'Y-m-d H:i:s') );
-			$entitlement->set_redemption_gift( $product->get_name() );
+			$entitlement->set_redemption_gift( $product->get_name() . ' ' . $color );
 			$entitlement->set_earned_income( $entitlement->get_deferred_amount() );
 			$entitlement->set_deferred_amount( 0.0 );
 	
 			$entitlement->save();
+			$context['current_levels'][$color]--;
 
 			$row = [
 				$subscription->get_id(),
@@ -127,6 +224,10 @@ class JC_Putter_Cover_Redemption_Request extends JC_Async_Report_Request {
 			fputcsv( $fp, $row );
 
 		}
+
+		// Save the updated stock levels
+		$report->set_context( json_encode( $context ) );
+		$report->save();
 
         fclose( $fp );
         

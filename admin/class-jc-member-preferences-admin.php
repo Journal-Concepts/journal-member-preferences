@@ -126,14 +126,44 @@ class JC_Member_Preferences_Admin {
 		]);
 
 		$options->add_field( [
-			'name' => __( 'Blade product #', 'journal-preferences' ),
-			'id'  => 'blade_product_id',
+			'name' => __( 'Variation IDs', 'journal-preferences' ),
+			'id'  => 'putter_variations',
+			'type' => 'title'
+		]);		
+
+		$options->add_field( [
+			'name' => __( 'Blade black', 'journal-preferences' ),
+			'id'  => 'blade_black_id',
 			'type' => 'text_small'
 		]);
 
 		$options->add_field( [
-			'name' => __( 'Mallet product #', 'journal-preferences' ),
-			'id'  => 'mallet_product_id',
+			'name' => __( 'Blade white', 'journal-preferences' ),
+			'id'  => 'blade_white_id',
+			'type' => 'text_small'
+		]);
+
+		$options->add_field( [
+			'name' => __( 'Blade green', 'journal-preferences' ),
+			'id'  => 'blade_green_id',
+			'type' => 'text_small'
+		]);
+
+		$options->add_field( [
+			'name' => __( 'Mallet black', 'journal-preferences' ),
+			'id'  => 'mallet_black_id',
+			'type' => 'text_small'
+		]);
+
+		$options->add_field( [
+			'name' => __( 'Mallet white', 'journal-preferences' ),
+			'id'  => 'mallet_white_id',
+			'type' => 'text_small'
+		]);
+
+		$options->add_field( [
+			'name' => __( 'Mallet tan', 'journal-preferences' ),
+			'id'  => 'mallet_tan_id',
 			'type' => 'text_small'
 		]);
 	}

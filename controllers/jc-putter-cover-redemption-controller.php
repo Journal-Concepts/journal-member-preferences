@@ -59,7 +59,16 @@ class JC_Putter_Cover_Redemption_Controller extends JC_AR_Report_Controller {
 
         $upload_dir = wp_upload_dir();
         $filename =  sanitize_file_name( date('Y-m-d-H:i:s') . '.csv' );
-        $title = isset( $context['title'] ) ? $context['title'] : '';
+
+        $title = "Redemptions";
+
+        if ( isset( $context['redeem'] ) ) {
+            $title .= " - " . $context['redeem'];
+
+            if ( $context['redeem'] === 'no-preference' && isset( $context['cutoff'] ) ) {
+                $title .= $context['cutoff'];
+            }
+        }
 
         $file = [
             'title' => $title,
@@ -84,7 +93,6 @@ class JC_Putter_Cover_Redemption_Controller extends JC_AR_Report_Controller {
 			fputcsv( $fp, $header_row );
 
 		}
-
 
         fclose( $fp );
 

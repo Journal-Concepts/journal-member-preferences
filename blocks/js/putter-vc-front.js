@@ -11,7 +11,7 @@
 	 * @param {*} nonce 
 	 * @param {*} data 
 	 */
-	function generateReport( baseAction, $reports ) {
+	function generateReport( nonce, data, baseAction, $reports ) {
 
 		var options = {
 			message: "Starting the report"
@@ -21,6 +21,8 @@
 
 		var params = {
 			action: baseAction + '_trigger',
+			context: data,
+			nonce: nonce
 		}
 
 		$.post( jc_async_reports.ajaxurl, params, function( result ) {
@@ -43,7 +45,7 @@
 		});
 	}
 
-	function redeemCovers( action, $reports ) {
+	function redeemCovers( nonce, data, action, $reports ) {
 
 		var options = {
 			message: "Starting the redemptions"
@@ -53,6 +55,8 @@
 
 		var params = {
 			action: action + '_trigger',
+			context: data,
+			nonce: nonce
 		}
 
 		$.post( jc_async_reports.ajaxurl, params, function( result ) {
@@ -85,18 +89,59 @@
 
 		$('#generate-report').click( function(e) {
 
+			var nonce = '';
+			var data = '';
 			e.preventDefault();
-			generateReport( baseAction, $reports );
+			generateReport( nonce, data, baseAction, $reports );
 
 		});
 
 		var redemptionAction = 'jc_putter_cover_redemption';
-		$('#redeem-covers').click( function(e) {
+		$('#redeem-covers').submit( function(e) {
 
 			e.preventDefault();
-			redeemCovers( redemptionAction, $reports );
+			var data = $("#redeem-covers :input").serialize();
+			var nonce = $("#_wpnonce").val();
+			redeemCovers( nonce, data, redemptionAction, $reports );
 
 		});
 
+		$('.choices').change( function() {
+			var selected = $('input[name="redeem"]:checked').val();
+
+			if ( selected === 'blade' ) {
+				$('.blade-levels').slideDown();
+				$('.mallet-levels').slideUp();
+				$('.no-preference').slideUp();
+			}
+
+			if ( selected === 'mallet' ) {
+				$('.blade-levels').slideUp();
+				$('.mallet-levels').slideDown();
+				$('.no-preference').slideUp();
+			}
+
+			if ( selected === 'no-preference' ) {
+				$('.blade-levels').slideDown();
+				$('.mallet-levels').slideUp();
+				$('.no-preference').slideDown();
+			}
+
+		});
+
+		$('.no-preference-choices').change( function() {
+			var selected = $('input[name="no-preference-choice"]:checked').val();
+
+			if ( selected === 'blade' ) {
+				$('.blade-levels').slideDown();
+				$('.mallet-levels').slideUp();
+			}
+
+			if ( selected === 'mallet' ) {
+				$('.blade-levels').slideUp();
+				$('.mallet-levels').slideDown();
+			}
+
+		});
     });
 })( jQuery );
