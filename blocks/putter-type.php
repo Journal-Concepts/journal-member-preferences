@@ -133,7 +133,7 @@ class JC_Member_Preferences_Putter_Type {
 			<div class="inner-wrapper">
 
 				<div class="message callout alert" style="display: none;">&nbsp;</div>
-				<h4>Your selection</h4>
+				<h4>Your selection:</h4>
                 <form class="putter-type-preference" name="putter_type_preference">
 
                     <?php wp_nonce_field( 'jc-preference-putter-type' );?>
