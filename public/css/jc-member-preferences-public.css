@@ -20,9 +20,9 @@ form.putter-type-preference input[type=radio] + label {
   font-size: 2rem;
   text-align: center;
   padding: 1rem 4rem;
-  border: 2px solid #28b473;
-  margin: 0;
-  color: grey;
+  border: 2px solid #cacaca;
+  margin: 0 8px;
+  color: #cacaca;
   font-family: "Unica77LLWebBold", "HelveticaNeue-Bold", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
 }
 form.putter-type-preference input[type=radio]:hover {
