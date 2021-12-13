@@ -166,6 +166,24 @@ class JC_Member_Preferences_Admin {
 			'id'  => 'mallet_tan_id',
 			'type' => 'text_small'
 		]);
+
+		$options->add_field( [
+			'name' => __( 'Square Mallet black', 'journal-preferences' ),
+			'id'  => 'square_mallet_black_id',
+			'type' => 'text_small'
+		]);
+
+		$options->add_field( [
+			'name' => __( 'Square Mallet white', 'journal-preferences' ),
+			'id'  => 'square_mallet_white_id',
+			'type' => 'text_small'
+		]);
+
+		$options->add_field( [
+			'name' => __( 'Square Mallet green', 'journal-preferences' ),
+			'id'  => 'square_mallet_green_id',
+			'type' => 'text_small'
+		]);
 	}
 
 }

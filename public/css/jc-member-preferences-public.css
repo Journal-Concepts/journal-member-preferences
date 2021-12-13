@@ -1,19 +1,15 @@
-.putter-type-block h4 {
-  text-align: center;
-  font-size: 32px;
-}
-
 form.putter-type-preference {
   text-align: center;
   width: 100%;
-  max-width: 500px;
   margin-left: auto;
   margin-right: auto;
 }
-form.putter-type-preference .choices {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+@media print, screen and (min-width: 40em) {
+  form.putter-type-preference .choices {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 form.putter-type-preference input[type=radio] {
   position: absolute !important;
@@ -22,13 +18,21 @@ form.putter-type-preference input[type=radio] {
   width: 1px;
 }
 form.putter-type-preference input[type=radio] + label {
+  display: block;
   font-size: 2rem;
   text-align: center;
   padding: 1rem 4rem;
-  border: 2px solid #cacaca;
-  margin: 0 8px;
-  color: #cacaca;
+  border: 2px solid #28b473;
+  margin: 20px;
+  color: grey;
   font-family: "Unica77LLWebBold", "HelveticaNeue-Bold", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+}
+@media print, screen and (min-width: 40em) and (max-width: 63.99em) {
+  form.putter-type-preference input[type=radio] + label {
+    font-size: 1.5rem;
+    padding: 0.5rem 2rem;
+    margin: 10px;
+  }
 }
 form.putter-type-preference input[type=radio]:hover {
   cursor: pointer;

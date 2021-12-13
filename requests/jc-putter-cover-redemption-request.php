@@ -47,27 +47,56 @@ class JC_Putter_Cover_Redemption_Request extends JC_Async_Report_Request {
 
 				case 'blade' : 
 				case 'mallet' :
+				case 'square-mallet' :
 					$redeem = $context['redeem'];
 					break;
 				case 'no-preference' :
-					$redeem = $context['no-preference-choice'] === 'mallet' ? 'mallet' : 'blade';
-					break;
+					switch ( $context['no-preference-choice'] ) {
+						case 'mallet' :
+						case 'square-mallet' : 
+						case 'blade' :
+							$redeem = $context['no-preference-choice'];
+							break;
+						default:
+							wc_get_logger()->warning( 'Unknown preference type', $this->context );
+							return [];
+					}
 				default:
 					wc_get_logger()->warning( 'Unknown redemption type', $this->context );
 					return [];
 			}
 
-			$context['current_levels'] = $redeem === 'blade' ? 
-				[ 
-					'blade-black' => $context['blade-black'],
-					'blade-white' => $context['blade-white'],
-					'blade-green' => $context['blade-green']
-				] :
-				[ 
-					'mallet-black' => $context['mallet-black'],
-					'mallet-white' => $context['mallet-white'],
-					'mallet-tan' => $context['mallet-tan']
-				];
+			$context['current_levels'] = [];
+			
+			if ( $redeem === 'blade' ) {
+				$context['current_levels'] = 
+					[ 
+						'blade-black' => $context['blade-black'],
+						'blade-white' => $context['blade-white'],
+						'blade-green' => $context['blade-green']
+					];
+			}
+
+			if ( $redeem === 'mallet' ) {
+				$context['current_levels'] =
+					[ 
+						'mallet-black' => $context['mallet-black'],
+						'mallet-white' => $context['mallet-white'],
+						'mallet-tan' => $context['mallet-tan']
+					];
+			}
+
+
+			if ( $redeem === 'square-mallet' ) {
+				$context['current_levels'] =
+					[ 
+						'square-mallet-black' => $context['sqaure-mallet-black'],
+						'square-mallet-white' => $context['square-mallet-white'],
+						'square-mallet-green' => $context['square-mallet-green']
+					];
+			}
+
+
 
 			$report->set_context( json_encode( $context ) );
 			$report->save();
@@ -119,6 +148,7 @@ class JC_Putter_Cover_Redemption_Request extends JC_Async_Report_Request {
 		switch ( $context['redeem'] ) {
 			case 'blade' :
 			case 'mallet' :
+			case 'square-mallet' :
 			case 'no-preference' :
 				$redeem = $context['redeem'];
 				break;

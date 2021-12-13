@@ -2,14 +2,15 @@ form.putter-type-preference {
     
     text-align: center;
     width: 100%;
-    max-width: 500px;
     margin-left: auto;
     margin-right: auto;
 
-    .choices {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    @media print, screen and (min-width: 40em) {
+        .choices {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     }
 
     input[type='radio'] {
@@ -19,13 +20,20 @@ form.putter-type-preference {
         width: 1px;
 
         &+label {
+            display: block;
             font-size: 2rem;
             text-align: center;
             padding: 1rem 4rem;
             border: 2px solid #28b473;
-            margin: 0;
+            margin: 20px;
             color: grey;
             font-family: "Unica77LLWebBold", "HelveticaNeue-Bold", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+
+            @media print, screen and (min-width: 40em) and (max-width: 63.99em) { 
+                font-size: 1.5rem;
+                padding: 0.5rem 2rem;
+                margin: 10px;
+            }
 
         }
 

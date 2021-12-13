@@ -124,6 +124,8 @@ class JC_Member_Preferences_Putter_VC {
 						<label for="blade">Blade</label>
 						<input type="radio" id="mallet" name="redeem" value="mallet"/>
 						<label for="mallet">Mallet</label>
+						<input type="radio" id="square-mallet" name="redeem" value="square-mallet"/>
+						<label for="square-mallet">Square Mallet</label>
 						<input type="radio" id="no-preference" name="redeem" value="no-preference"/>
 						<label for="no-preference">No preference</label>
 					</div>
@@ -135,6 +137,8 @@ class JC_Member_Preferences_Putter_VC {
 							<label for="no-preference-blade">Blade</label>
 							<input type="radio" id="no-preference-mallet" name="no-preference-choice" value="mallet"/>
 							<label for="no-preference-mallet">Mallet</label>
+							<input type="radio" id="no-preference-square-mallet" name="no-preference-choice" value="square-mallet"/>
+							<label for="no-preference-square-mallet">Square Mallet</label>
 						</div>
 						<label for="cutoff">Cut off date</label>
 						<input type="date" name="cutoff" class="cutoff"/>
@@ -156,8 +160,8 @@ class JC_Member_Preferences_Putter_VC {
 							<label>Green ID<input type="text" id="blade-green-id" name="blade-green-id"
 								readonly="readonly" value="<?php echo jc_get_option( 'blade_green_id', false, 'preferences' )?>"/></label>
 						</div>
-
 					</div>
+
 					<div class="mallet-levels" style="display:none">
 						<p>Number of mallet covers to redeem</p>
 						<div>
@@ -173,6 +177,25 @@ class JC_Member_Preferences_Putter_VC {
 								readonly="readonly" value="<?php echo jc_get_option( 'mallet_white_id', false, 'preferences' )?>"/></label>
 							<label>Tan ID<input type="text" id="mallet-tan-id" name="mallet-tan-id"
 								readonly="readonly" value="<?php echo jc_get_option( 'mallet_tan_id', false, 'preferences' )?>"/></label>
+						</div>
+					</div>
+
+
+					<div class="square-mallet-levels" style="display:none">
+						<p>Number of square-mallet covers to redeem</p>
+						<div>
+							<label>Black<input type="number" id="square-mallet-black" name="square-mallet-black"/></label>
+							<label>White<input type="number" id="square-mallet-white" name="square-mallet-white"/></label>
+							<label>Green<input type="number" id="square-mallet-green" name="square-mallet-green"/></label>
+						</div>
+						<p>Square Mallet variation IDs</p>
+						<div>
+							<label>Black ID<input type="text" id="square-mallet-black-id" name="square-mallet-black-id" 
+								readonly="readonly" value="<?php echo jc_get_option( 'square_mallet_black_id', false, 'preferences' )?>"/></label>
+							<label>White ID<input type="text" id="square-mallet-white-id" name="square-mallet-white-id"
+								readonly="readonly" value="<?php echo jc_get_option( 'square_mallet_white_id', false, 'preferences' )?>"/></label>
+							<label>Green ID<input type="text" id="square-mallet-green-id" name="square-mallet-green-id"
+								readonly="readonly" value="<?php echo jc_get_option( 'square_mallet_green_id', false, 'preferences' )?>"/></label>
 						</div>
 					</div>
 

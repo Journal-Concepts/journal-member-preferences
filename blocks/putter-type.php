@@ -139,11 +139,14 @@ class JC_Member_Preferences_Putter_Type {
                     <?php wp_nonce_field( 'jc-preference-putter-type' );?>
 					<div class="choices">
 						<input type="radio" id="blade" name="putter-type" value="blade" <?php 
-						if ( $checked === 'blade' ) echo 'checked';?> />
+						if ( !in_array( $checked, [ 'mallet', 'square-mallet' ] ) ) echo 'checked';?> />
 						<label for="blade">Blade</label>
 						<input type="radio" id="mallet" name="putter-type" value="mallet" <?php 
-						if ( $checked !== 'blade' ) echo 'checked';?>/>
+						if ( $checked === 'mallet' ) echo 'checked';?>/>
 						<label for="mallet">Mallet</label>
+						<input type="radio" id="square-mallet" name="putter-type" value="square-mallet" <?php 
+						if ( $checked === 'square-mallet' ) echo 'checked';?>/>
+						<label for="square-mallet">Square Mallet</label>
 					</div>
                     <input type="submit" class="button" value="Save Choice"/>
                 </form>

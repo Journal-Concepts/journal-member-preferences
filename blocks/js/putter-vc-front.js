@@ -112,18 +112,28 @@
 			if ( selected === 'blade' ) {
 				$('.blade-levels').slideDown();
 				$('.mallet-levels').slideUp();
+				$('.square-mallet-levels').slideUp();
 				$('.no-preference').slideUp();
 			}
 
 			if ( selected === 'mallet' ) {
 				$('.blade-levels').slideUp();
 				$('.mallet-levels').slideDown();
+				$('.square-mallet-levels').slideUp();
+				$('.no-preference').slideUp();
+			}
+
+			if ( selected === 'square-mallet' ) {
+				$('.blade-levels').slideUp();
+				$('.mallet-levels').slideUp();
+				$('.square-mallet-levels').slideDown();
 				$('.no-preference').slideUp();
 			}
 
 			if ( selected === 'no-preference' ) {
 				$('.blade-levels').slideDown();
 				$('.mallet-levels').slideUp();
+				$('.square-mallet-levels').slideUp();
 				$('.no-preference').slideDown();
 			}
 
@@ -135,11 +145,19 @@
 			if ( selected === 'blade' ) {
 				$('.blade-levels').slideDown();
 				$('.mallet-levels').slideUp();
+				$('.square-mallet-levels').slideUp();
 			}
 
 			if ( selected === 'mallet' ) {
 				$('.blade-levels').slideUp();
 				$('.mallet-levels').slideDown();
+				$('.square-mallet-levels').slideUp();
+			}
+
+			if ( selected === 'square-mallet' ) {
+				$('.blade-levels').slideUp();
+				$('.mallet-levels').slideUp();
+				$('.square-mallet-levels').slideDown();
 			}
 
 		});
