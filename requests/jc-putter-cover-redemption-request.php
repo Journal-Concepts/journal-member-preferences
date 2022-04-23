@@ -156,7 +156,7 @@ class JC_Putter_Cover_Redemption_Request extends JC_Async_Report_Request {
 				break;
 			default: 
 				wc_get_logger()->warning( "Unknown redemption type", $this->context );
-				error_log( "process data: " . json_encode( $context ) )
+				error_log( "process data: " . json_encode( $context ) );
 				return false;
 		}
 
