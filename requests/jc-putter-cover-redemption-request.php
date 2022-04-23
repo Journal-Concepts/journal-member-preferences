@@ -208,9 +208,14 @@ class JC_Putter_Cover_Redemption_Request extends JC_Async_Report_Request {
 				$preference = get_user_meta( $subscription->get_customer_id(), 'jc_putter_type', true );
 			}
 
+			error_log( "Context is " . json_encode( $context ) );
+			error_log( "Preference is " . $preference );
+			error_log( "Redeem is " . $redeem );
+
 			// Only process where preference matches the redemption type
 			// Handle no preference
 			if ( ( $context['redeem'] === 'no-preference' ) && $preference ) {
+				error_log( "Skipping " );
 				continue;
 			}
 		
