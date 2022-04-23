@@ -43,6 +43,8 @@ class JC_Putter_Cover_Redemption_Request extends JC_Async_Report_Request {
 
 			$redeem = '';
 
+			error_log( json_encode( $context['redeem'] ) );
+
 			switch ( $context['redeem'] ) {
 
 				case 'blade' : 
