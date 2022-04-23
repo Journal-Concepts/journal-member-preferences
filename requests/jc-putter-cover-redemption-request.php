@@ -63,6 +63,7 @@ class JC_Putter_Cover_Redemption_Request extends JC_Async_Report_Request {
 							wc_get_logger()->warning( 'Unknown preference type', $this->context );
 							return [];
 					}
+					break;
 				default:
 					wc_get_logger()->warning( 'Unknown redemption type', $this->context );
 					return [];
