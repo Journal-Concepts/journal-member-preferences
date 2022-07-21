@@ -126,7 +126,7 @@ class JC_Member_Preferences {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'blocks/putter-type.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'blocks/putter-vc.php';
 
-		add_action( 'plugins_loaded', [ $this, 'load_dependant_classes' ], 99 );
+		add_action( 'plugins_loaded', [ $this, 'load_dependant_classes' ], 999 );
 
 		$this->loader = new JC_Member_Preferences_Loader();
 
@@ -144,11 +144,12 @@ class JC_Member_Preferences {
 			new JC_Member_Preferences_Query();
 		}
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'requests/jc-putter-cover-report-request.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'controllers/jc-putter-cover-report-controller.php';
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'requests/jc-putter-cover-report-request.php';
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'controllers/jc-putter-cover-report-controller.php';
+	
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'requests/jc-putter-cover-redemption-request.php';
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'controllers/jc-putter-cover-redemption-controller.php';
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'requests/jc-putter-cover-redemption-request.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'controllers/jc-putter-cover-redemption-controller.php';
 	}
 
 	/**

@@ -91,7 +91,7 @@ class JC_Putter_Cover_Redemption_Request extends JC_Async_Report_Request {
 			if ( $redeem === 'square-mallet' ) {
 				$context['current_levels'] =
 					[ 
-						'square-mallet-black' => $context['sqaure-mallet-black'],
+						'square-mallet-black' => $context['square-mallet-black'],
 						'square-mallet-white' => $context['square-mallet-white'],
 						'square-mallet-green' => $context['square-mallet-green']
 					];
