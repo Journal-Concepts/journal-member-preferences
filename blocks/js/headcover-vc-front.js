@@ -87,7 +87,7 @@
 		var baseAction = 'jc_headcover_report';
 		var $reports = $('.async-report-vc .reports');
 
-		$('#generate-report').click( function(e) {
+		$('#generate-headcover-report').click( function(e) {
 
 			var nonce = '';
 			var data = '';
@@ -97,10 +97,10 @@
 		});
 
 		var redemptionAction = 'jc_headcover_redemption';
-		$('#redeem-covers').submit( function(e) {
+		$('#redeem-headcovers').submit( function(e) {
 
 			e.preventDefault();
-			var data = $("#redeem-covers :input").serialize();
+			var data = $("#redeem-headcovers :input").serialize();
 			var nonce = $("#_wpnonce").val();
 			redeemCovers( nonce, data, redemptionAction, $reports );
 

@@ -1,10 +1,10 @@
-.putter-type-block {
+.putter-type-block, .headcover-block {
     h4 {
         text-align: center;
     }
 }
 
-form.putter-type-preference {
+form.putter-type-preference, form.headcover-preference {
     
     text-align: center;
     width: 100%;
@@ -27,9 +27,9 @@ form.putter-type-preference {
 
         &+label {
             display: block;
-            font-size: 2rem;
+            font-size: 24px;
             text-align: center;
-            padding: 1rem 4rem;
+            padding: 12px 3rem;
             border: 2px solid #28b473;
             margin: 20px;
             color: grey;

@@ -41,63 +41,12 @@ class JC_Headcover_Redemption_Request extends JC_Async_Report_Request {
 		// Maybe initialise the current stock levels
 		if ( !isset( $context['current_levels'] ) ) {
 
-			$redeem = '';
-
-			switch ( $context['redeem'] ) {
-
-				case 'blade' : 
-				case 'mallet' :
-				case 'square-mallet' :
-					$redeem = $context['redeem'];
-					break;
-				case 'no-preference' :
-					switch ( $context['no-preference-choice'] ) {
-						case 'mallet' :
-						case 'square-mallet' : 
-						case 'blade' :
-							$redeem = $context['no-preference-choice'];
-							break;
-						default:
-							wc_get_logger()->warning( 'Unknown preference type', $this->context );
-							return [];
-					}
-					break;
-				default:
-					wc_get_logger()->warning( 'Unknown redemption type', $this->context );
-					return [];
-			}
-
-			$context['current_levels'] = [];
-			
-			if ( $redeem === 'blade' ) {
-				$context['current_levels'] = 
-					[ 
-						'blade-black' => $context['blade-black'],
-						'blade-white' => $context['blade-white'],
-						'blade-green' => $context['blade-green']
-					];
-			}
-
-			if ( $redeem === 'mallet' ) {
-				$context['current_levels'] =
-					[ 
-						'mallet-black' => $context['mallet-black'],
-						'mallet-white' => $context['mallet-white'],
-						'mallet-tan' => $context['mallet-tan']
-					];
-			}
-
-
-			if ( $redeem === 'square-mallet' ) {
-				$context['current_levels'] =
-					[ 
-						'square-mallet-black' => $context['square-mallet-black'],
-						'square-mallet-white' => $context['square-mallet-white'],
-						'square-mallet-green' => $context['square-mallet-green']
-					];
-			}
-
-
+			$context['current_levels'] = [ 
+				'tan' => $context['tan'],
+				'white' => $context['white'],
+				'black' => $context['black']
+			];
+		
 
 			$report->set_context( json_encode( $context ) );
 			$report->save();
@@ -121,7 +70,7 @@ class JC_Headcover_Redemption_Request extends JC_Async_Report_Request {
 
 		$data_store = WC_Data_Store::load( 'journal_premium_entitlement' );
 
-		$entitlements = $data_store->get_entitlements_for_number( 5, 'unredeemed', $this->per_step, $offset, $cutoff );
+		$entitlements = $data_store->get_entitlements_for_number( 6, 'unredeemed', $this->per_step, $offset, $cutoff );
 
         return $entitlements;
     }
@@ -144,19 +93,7 @@ class JC_Headcover_Redemption_Request extends JC_Async_Report_Request {
             return false;
 		}
 
-		$redeem = '';
-
-		switch ( $context['redeem'] ) {
-			case 'blade' :
-			case 'mallet' :
-			case 'square-mallet' :
-			case 'no-preference' :
-				$redeem = $context['redeem'];
-				break;
-			default: 
-				wc_get_logger()->warning( "Unknown redemption type", $this->context );
-				return false;
-		}
+		$redeem = $context['redeem'];
 
         if ( !property_exists( $downloads[0], 'filename' ) ) {
             wc_get_logger()->warning( "No download file", $this->context );
