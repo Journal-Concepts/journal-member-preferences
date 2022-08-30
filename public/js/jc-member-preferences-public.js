@@ -40,6 +40,45 @@
 
 	}
 
+	function setHeadcoverPreference( nonce, value ) {
+
+		var options = {
+			message: "Setting your headcover preference"
+		};
+
+
+		HoldOn.open(options);
+
+		var params = {
+			action: 'jc_set_headcover',
+			headcover: value,
+			nonce: nonce
+		}
+
+		$.post( jc_member_preferences.ajaxurl, params, function( result ) {
+
+			var status = $(result).find( 'response_data' ).text();
+			var message = $(result).find( 'supplemental message' ).text();
+			var $messageBox = $('.message');
+
+			if ( status === 'success' ) {
+
+				$messageBox.removeClass('alert').addClass('success');
+				$messageBox.html( message ).slideDown();
+				$('.headcover-preference').hide();
+				HoldOn.close();
+
+			} else {
+
+				$messageBox.html( message ).slideDown();
+				HoldOn.close();
+			}
+
+		});
+
+
+	}
+
     $(function() {
 
 		$('.putter-type-preference').submit( function(e) {
@@ -49,6 +88,16 @@
 			var value = $("[name='putter-type']:checked").val();
 			var nonce = $("#_wpnonce").val();
 			setPreference( nonce, value );
+
+		});
+
+		$('.headcover-preference').submit( function(e) {
+
+			e.preventDefault();
+
+			var value = $("[name='headcover']:checked").val();
+			var nonce = $("#_wpnonce").val();
+			setHeadcoverPreference( nonce, value );
 
 		});
 

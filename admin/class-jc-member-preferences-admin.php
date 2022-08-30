@@ -184,6 +184,25 @@ class JC_Member_Preferences_Admin {
 			'id'  => 'square_mallet_green_id',
 			'type' => 'text_small'
 		]);
+
+
+		$options->add_field( [
+			'name' => __( 'Headcover Tan', 'journal-preferences' ),
+			'id'  => 'headcover_tan_id',
+			'type' => 'text_small'
+		]);
+
+		$options->add_field( [
+			'name' => __( 'Headcover White', 'journal-preferences' ),
+			'id'  => 'headcover_white_id',
+			'type' => 'text_small'
+		]);
+
+		$options->add_field( [
+			'name' => __( 'Headcover Black', 'journal-preferences' ),
+			'id'  => 'headcover_black_id',
+			'type' => 'text_small'
+		]);
 	}
 
 }

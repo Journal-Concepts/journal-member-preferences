@@ -118,20 +118,20 @@ class JC_Member_Preferences_Query extends WC_Query {
 			if ( isset( $_POST['putter-type'] ) ) {
 				update_user_meta( $user_id, 'jc_putter_type', $_POST['putter-type']);
 				$message = "Your preferences have been updated";
-			} else {
-				$message = "Updated failed";
 			}
+
+			if ( isset( $_POST['headcover'] ) ) {
+				update_user_meta( $user_id, 'jc_headcover', $_POST['headcover']);
+				$message = "Your preferences have been updated";
+			} 
+
 		}
 
-		$checked = 'blade';
 
-		if ( $user_id ) {
-			$preferred_type = get_user_meta( $user_id, 'jc_putter_type', true );
 
-			if ( $preferred_type ) {
-				$checked = $preferred_type;
-			}
-		}
+		$preferred_type = get_user_meta( $user_id, 'jc_putter_type', true );
+
+		$preferred_headcover = get_user_meta( $user_id, 'jc_headcover', true );
 
 		?>
 
@@ -150,11 +150,29 @@ class JC_Member_Preferences_Query extends WC_Query {
 						<p>Putter type:</p>
 						<div class="choices">
 							<input type="radio" id="blade" name="putter-type" value="blade" <?php 
-							if ( $checked === 'blade' ) echo 'checked';?> />
+							if ( $preferred_type === 'blade' ) echo 'checked';?> />
 							<label for="blade">Blade</label>
 							<input type="radio" id="mallet" name="putter-type" value="mallet" <?php 
-							if ( $checked !== 'blade' ) echo 'checked';?>/>
+							if ( $preferred_type === 'mallet' ) echo 'checked';?> />
 							<label for="mallet">Mallet</label>
+							<input type="radio" id="square-mallet" name="putter-type" value="square-mallet" <?php 
+							if ( $preferred_type === 'square-mallet' ) echo 'checked';?> />
+							<label for="square-mallet">Square Mallet</label>
+						</div>
+					</div>
+
+					<div class="headcover">
+						<p>Headcover Color:</p>
+						<div class="choices">
+							<input type="radio" id="tan" name="headcover" value="tan" <?php 
+							if ( $preferred_headcover === 'tan' ) echo 'checked';?> />
+							<label for="tan">Tan</label>
+							<input type="radio" id="white" name="headcover" value="white" <?php 
+							if ( $preferred_headcover === 'white' ) echo 'checked';?> />
+							<label for="white">White</label>
+							<input type="radio" id="black" name="headcover" value="black" <?php 
+							if ( $preferred_headcover === 'black' ) echo 'checked';?> />
+							<label for="black">Black</label>
 						</div>
 					</div>
                     <input type="submit" class="button" value="Save Preferences"/>
