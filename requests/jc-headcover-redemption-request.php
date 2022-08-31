@@ -104,6 +104,11 @@ class JC_Headcover_Redemption_Request extends JC_Async_Report_Request {
 
 		foreach ( $data as $entitlement ) {
 
+			if ( $entitlement->get_redemption_order_id() != '' ) {
+				error_log( "already redeemed " . $entitlement->get_id() );
+				continue;
+			}
+
 			$current_levels = $context['current_levels'];
 
 			// Check whether we've reached the limit
@@ -132,7 +137,7 @@ class JC_Headcover_Redemption_Request extends JC_Async_Report_Request {
 
 				$gifted = true;
 				$recipient_id = WCS_Gifting::get_recipient_user( $subscription );
-				$preference = get_user_meta( $recipient_id, 'jc_putter_type', true );
+				$preference = get_user_meta( $recipient_id, 'jc_headcover', true );
 				
 				$gift_recipient = get_userdata( $recipient_id );
 
@@ -143,7 +148,7 @@ class JC_Headcover_Redemption_Request extends JC_Async_Report_Request {
 				}
 				
     		} else {
-				$preference = get_user_meta( $subscription->get_customer_id(), 'jc_putter_type', true );
+				$preference = get_user_meta( $subscription->get_customer_id(), 'jc_headcover', true );
 			}
 
 
