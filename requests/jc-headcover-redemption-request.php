@@ -169,7 +169,7 @@ class JC_Headcover_Redemption_Request extends JC_Async_Report_Request {
 
 			$entitlement->set_redemption_order_id( $order_id );
 			$entitlement->set_redemption_date( date( 'Y-m-d H:i:s') );
-			$entitlement->set_redemption_gift( $product->get_name() . ' ' . $color );
+			$entitlement->set_redemption_gift( $product->get_name() );
 			$entitlement->set_earned_income( $entitlement->get_deferred_amount() );
 			$entitlement->set_deferred_amount( 0.0 );
 	
