@@ -110,7 +110,7 @@ class JC_Member_Preferences_Headcover_VC {
 
 		?>
 		
-		<div class="async-report-vc" data-base-action=jc_headcover_cover_report>
+		<div class="async-report-vc" data-base-action=jc_headcover_report>
 		
 			<div class="control">
 		
