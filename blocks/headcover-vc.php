@@ -179,7 +179,7 @@ class JC_Member_Preferences_Headcover_VC {
 				<h4>Redemption reports</h4>
 				<?php
 
-				$reports = journal_get_all_async_reports( 'headcovercover-redemption' );
+				$reports = journal_get_all_async_reports( 'headcover-redemption' );
 				$template_loader = new TSJ_Subscriptions_Template_Loader;
 
 				if ( is_array( $reports ) ) {
