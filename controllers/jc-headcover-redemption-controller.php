@@ -60,12 +60,14 @@ class JC_Headcover_Redemption_Controller extends JC_AR_Report_Controller {
         $upload_dir = wp_upload_dir();
         $filename =  sanitize_file_name( date('Y-m-d-H:i:s') . '.csv' );
 
+        error_log( print_r( $context, true ) );
+
         $title = "Redemptions";
 
         if ( isset( $context['redeem'] ) ) {
             $title .= " - " . $context['redeem'];
 
-            if ( $context['redeem'] === 'no-preference' && isset( $context['cutoff'] ) ) {
+            if ( $context['redeem'] == 'no-preference' && isset( $context['cutoff'] ) ) {
                 $title .= $context['cutoff'];
             }
         }
