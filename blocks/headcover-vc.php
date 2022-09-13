@@ -160,7 +160,7 @@ class JC_Member_Preferences_Headcover_VC {
 			<div class="reports">
 				<?php
 
-				$reports = journal_get_all_async_reports( 'headcover-status' );
+				$reports = journal_get_all_async_reports( 'headcover' );
 				$template_loader = new TSJ_Subscriptions_Template_Loader;
 		
 				if ( is_array( $reports ) ) {
@@ -168,7 +168,7 @@ class JC_Member_Preferences_Headcover_VC {
 		
 						$template_data = [ 
 							'report' => $report,
-							'report_type' => 'headcover-status'
+							'report_type' => 'headcover'
 						];
 		
 						$template_loader->set_template_data( $template_data );
