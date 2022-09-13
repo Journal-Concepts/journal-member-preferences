@@ -154,9 +154,8 @@ class JC_Member_Preferences_Headcover_VC {
 				
 			</div>
 		
+			<h3>Status reports</h3>
 			<div class="reports">
-
-				<h4>Status reports</h4>
 				<?php
 
 				$reports = journal_get_all_async_reports( 'headcover-status' );
@@ -175,8 +174,10 @@ class JC_Member_Preferences_Headcover_VC {
 					}
 				}
 				?>
+			</div>
 
-				<h4>Redemption reports</h4>
+			<h3>Redemption reports</h3>
+			<div class="reports">
 				<?php
 
 				$reports = journal_get_all_async_reports( 'headcover-redemption' );
