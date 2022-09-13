@@ -106,5 +106,17 @@
 
 		});
 
+		$('.choices').change( function() {
+			var selected = $('input[name="redeem"]:checked').val();
+
+			if ( selected === 'no-preference' ) {
+				$('.no-preference').slideDown();
+			} else {
+				$('.no-preference').slideUp();
+			
+			}
+
+		});
+
     });
 })( jQuery );
