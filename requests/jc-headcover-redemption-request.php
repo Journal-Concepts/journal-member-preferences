@@ -93,8 +93,6 @@ class JC_Headcover_Redemption_Request extends JC_Async_Report_Request {
             return false;
 		}
 
-		$redeem = $context['redeem'];
-
         if ( !property_exists( $downloads[0], 'filename' ) ) {
             wc_get_logger()->warning( "No download file", $this->context );
             return false;
@@ -121,6 +119,13 @@ class JC_Headcover_Redemption_Request extends JC_Async_Report_Request {
 			$recipient_email = '';
 			$recipient_id = '';
 			$gifted = false;
+
+			$subscription = wcs_get_subscription( $entitlement->get_subscription_id() );
+
+            if ( !$subscription ) {
+                wc_get_logger()->warning( 'not a subscription ' . $entitlement->get_subscription_id(), $this->context );
+                continue;
+            }
 
 			if ( WCS_Gifting::is_gifted_subscription( $subscription ) ) {
 
@@ -176,14 +181,6 @@ class JC_Headcover_Redemption_Request extends JC_Async_Report_Request {
 				wc_get_logger()->warning( 'No a product for ' . $variation_id, $this->context );
 				continue;
 			}
-
-			$subscription = wcs_get_subscription( $entitlement->get_subscription_id() );
-
-            if ( !$subscription ) {
-                wc_get_logger()->warning( 'not a subscription ' . $entitlement->get_subscription_id(), $this->context );
-                continue;
-            }
-
 
 			$order_id = journal_create_redemption_order( $entitlement, $product );
 
