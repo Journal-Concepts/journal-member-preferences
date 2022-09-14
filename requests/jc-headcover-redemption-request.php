@@ -116,18 +116,7 @@ class JC_Headcover_Redemption_Request extends JC_Async_Report_Request {
 				break;
 			}
 
-			// Get the variation ID to use
-			$variation_id = 0;
-			$color = array_search( max( $context['current_levels']), $context['current_levels'] );
-
-			$variation_id = $context[$color . '-id'];
-
-			$subscription = wcs_get_subscription( $entitlement->get_subscription_id() );
-
-            if ( !$subscription ) {
-                wc_get_logger()->warning( 'not a subscription ' . $entitlement->get_subscription_id(), $this->context );
-                continue;
-            }
+			// Get the preferred colour
 
 			$recipient_email = '';
 			$recipient_id = '';
@@ -154,13 +143,32 @@ class JC_Headcover_Redemption_Request extends JC_Async_Report_Request {
 
 			// Only process where preference matches the redemption type
 			// Handle no preference
-			if ( ( $context['redeem'] === 'no-preference' ) && $preference ) {
-				continue;
+			if ( ( $context['redeem'] === 'no-preference' ) ) {
+
+				if ( $preference ) {
+					continue;
+				}
+
+				$color = array_search( max( $context['current_levels']), $context['current_levels'] );
+				
+			} else {
+
+				if ( !$preference ) {
+					continue;
+				}
+
+				// Move to next entitlement if color exhausted
+				if ( $current_levels[$preference] <= 0 ) {
+					continue;
+				} 
+
+				$color = $preference;
+				
 			}
-		
-			if ( ( $context['redeem'] !== 'no-preference' ) && ( $preference !== $redeem ) ) {
-				continue;
-			}
+
+			// Get the variation ID to use
+			$variation_id = 0;
+			$variation_id = $context[$color . '-id'];
 
 			$product = wc_get_product( $variation_id );
 
@@ -169,8 +177,15 @@ class JC_Headcover_Redemption_Request extends JC_Async_Report_Request {
 				continue;
 			}
 
-			$order_id = journal_create_redemption_order( $entitlement, $product );
+			$subscription = wcs_get_subscription( $entitlement->get_subscription_id() );
 
+            if ( !$subscription ) {
+                wc_get_logger()->warning( 'not a subscription ' . $entitlement->get_subscription_id(), $this->context );
+                continue;
+            }
+
+
+			$order_id = journal_create_redemption_order( $entitlement, $product );
 
 			$entitlement->set_redemption_order_id( $order_id );
 			$entitlement->set_redemption_date( date( 'Y-m-d H:i:s') );
