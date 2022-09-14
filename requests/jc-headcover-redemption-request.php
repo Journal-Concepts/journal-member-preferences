@@ -102,16 +102,15 @@ class JC_Headcover_Redemption_Request extends JC_Async_Report_Request {
 
 		foreach ( $data as $entitlement ) {
 
-			if ( $entitlement->get_redemption_order_id() != '' ) {
-				error_log( "already redeemed " . $entitlement->get_id() );
-				continue;
+			// Check whether we've reached the limit
+			if ( max( $context['current_levels'] ) <= 0 ) {
+				wc_get_logger()->info( 'Current levels exhausted ' . print_r( $context, true ) );
+				break;
 			}
 
-			$current_levels = $context['current_levels'];
-
-			// Check whether we've reached the limit
-			if ( max( $current_levels ) <= 0 ) {
-				break;
+			if ( $entitlement->get_redemption_order_id() != '' ) {
+				wc_get_logger()->warning( "already redeemed " . $entitlement->get_id() );
+				continue;
 			}
 
 			// Get the preferred colour
@@ -163,7 +162,8 @@ class JC_Headcover_Redemption_Request extends JC_Async_Report_Request {
 				}
 
 				// Move to next entitlement if color exhausted
-				if ( $current_levels[$preference] <= 0 ) {
+				if ( $context['current_levels'][$preference] <= 0 ) {
+					wc_get_logger()->info( 'color exhausted ' . $preference . ' Entitlement: ' . $entitlement->get_id(), $this->context );
 					continue;
 				} 
 
