@@ -100,11 +100,13 @@ class JC_Headcover_Redemption_Request extends JC_Async_Report_Request {
 
         $fp = fopen( $downloads[0]->filename, 'a' );
 
+		wc_get_logger()->info( 'Current levels ' . print_r( $context, true ), $this->context );
+
 		foreach ( $data as $entitlement ) {
 
 			// Check whether we've reached the limit
 			if ( max( $context['current_levels'] ) <= 0 ) {
-				wc_get_logger()->info( 'Current levels exhausted ' . print_r( $context, true ) );
+				wc_get_logger()->info( 'Current levels exhausted ' . print_r( $context, true ), $this->context );
 				break;
 			}
 
