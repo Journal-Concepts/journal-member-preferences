@@ -180,6 +180,7 @@ class JC_Member_Preferences_Headcover {
 		}
 
 		if ( !is_user_logged_in() ) {
+			error_log( 'user not logged in ' );
 			return;
 		}
 
@@ -189,9 +190,11 @@ class JC_Member_Preferences_Headcover {
 		update_user_meta( $user_id, 'jc_headcover', $_POST['headcover'] );
 
 		$redirect_url = get_permalink( jc_get_option( 'headcover_redirect_page', false, 'preferences' ) );
+		error_log( 'redirecting to ' . $redirect_url );
 
 		if ( $redirect_url ) {
 			wp_redirect( add_query_arg( [ 'selection' => $_POST['headcover'] ], $redirect_url ) );
+			exit;
 		}
  
     }
