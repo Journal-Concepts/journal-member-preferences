@@ -203,6 +203,13 @@ class JC_Member_Preferences_Admin {
 			'id'  => 'headcover_black_id',
 			'type' => 'text_small'
 		]);
+
+		$options->add_field([
+			'name' => __( 'Headcover Redirect Page', 'journal-preferences' ),
+			'id' => 'headcover_redirect_page',
+			'type' => 'select',
+			'options_cb' => 'jc_pages'
+		]);
 	}
 
 }

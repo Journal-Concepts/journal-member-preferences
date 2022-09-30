@@ -234,8 +234,7 @@ class JC_Member_Preferences {
 		$this->loader->add_action( 'init', $block, 'enqueue_styles' );
 		$this->loader->add_action( 'init', $block, 'enqueue_scripts' );
 		$this->loader->add_action( 'init', $block, 'register' );
-		$this->loader->add_action( 'wp_ajax_nopriv_jc_set_headcover', $block, 'handle_submission' );
-		$this->loader->add_action( 'wp_ajax_jc_set_headcover', $block, 'handle_submission' );
+		$this->loader->add_action( 'init', $block, 'handle_submission' );
 
 		$vc = new JC_Member_Preferences_Headcover_VC( $this->get_version() );
 

@@ -110,9 +110,6 @@ class JC_Member_Preferences_Headcover {
 	 */
 	public function preference_form() {
 
-        wp_enqueue_script( 'holdon' );
-        wp_enqueue_style( 'holdon' );
-        wp_enqueue_script( 'journal-member-preferences-public' );
 		wp_enqueue_style( 'journal-member-preferences-public' );
 		ob_start();
 
@@ -132,9 +129,7 @@ class JC_Member_Preferences_Headcover {
 		<div class="headcover-block">
 			<div class="inner-wrapper">
 
-				<div class="message callout alert" style="display: none;">&nbsp;</div>
-				
-                <form class="headcover-preference" name="headcover_preference">
+                <form class="headcover-preference" name="headcover_preference" method="post">
 
 					<h4>Your selection:</h4>
 
@@ -150,6 +145,7 @@ class JC_Member_Preferences_Headcover {
 						if ( $checked === 'black' ) echo 'checked';?>/>
 						<label for="black">Black</label>
 					</div>
+					<input type="hidden" name="headcover_selection" value=1/>
                     <input type="submit" class="button" value="Save Preference"/>
                 </form>
 
@@ -171,52 +167,28 @@ class JC_Member_Preferences_Headcover {
      */
     public function handle_submission() {
 
-        $response = new WP_Ajax_Response;
-
-        // Add nonce check
-        if ( !check_ajax_referer( 'jc-preference-headcover', 'nonce', false ) ) {
-            // Failed
-            $response->add( [
-                'data' => 'error',
-                'supplemental' => [
-                    'message' => __( 'Problem selecting headcover color', 'journal-member-preferences' ),
-                ],
-            ] );
-
-            $response->send();
-            exit();
-
-        }
-
-		if ( !is_user_logged_in() ) {
-
-			$response->add( [
-                'data' => 'error',
-                'supplemental' => [
-                    'message' => __( 'You need to be logged in to select your headcover color', 'journal-member-preferences' ),
-                ],
-            ] );
-
-            $response->send();
-            exit();
+        if ( !isset( $_POST['headcover_selection']) ) {
+			return;
 		}
 
+		if ( !(isset( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( $_REQUEST['_wpnonce'], 'jc-preference-headcover' ) ) ) {
+			return;
+		}
 
+		if ( !is_user_logged_in() ) {
+			return;
+		}
 
 		$user_id = get_current_user_id();
 
 		// Set the data 
 		update_user_meta( $user_id, 'jc_headcover', $_POST['headcover'] );
 
-		$response->add( [
-			'data' => 'success',
-			'supplemental' => [
-				'message' => sprintf('Your preferred headcover color has been set to <strong>%1$s</strong>.<br/>If you would like to change this, please <a href="%2$s">click here</a>', $_POST['headcover'], get_permalink() )
-			],
-		] );
+		$redirect_url = get_permalink( jc_get_option( 'headcover_redirect_page', false, 'preferences' ) );
 
-		$response->send();
-		exit(); 
+		if ( $redirect_url ) {
+			wp_redirect( add_query_arg( [ 'selection' => $_POST['headcover'] ], $redirect_url ) );
+		}
  
     }
 
