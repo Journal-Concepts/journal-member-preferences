@@ -167,11 +167,15 @@ class JC_Member_Preferences_Headcover {
      */
     public function handle_submission() {
 
+		
         if ( !isset( $_POST['headcover_selection']) ) {
 			return;
 		}
 
+		error_log( "in handle submission " . print_r( $_POST, true )  );
+
 		if ( !(isset( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( $_REQUEST['_wpnonce'], 'jc-preference-headcover' ) ) ) {
+			error_log( "failed nonce check" );
 			return;
 		}
 
