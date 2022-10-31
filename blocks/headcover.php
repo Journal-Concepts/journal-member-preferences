@@ -66,6 +66,7 @@ class JC_Member_Preferences_Headcover {
 				'wp-i18n',
 				'wp-element',
 				'wp-components',
+				'wp-data'
 			], 
 			$this->version, 
 			'all' 
@@ -83,7 +84,12 @@ class JC_Member_Preferences_Headcover {
 			'editor_script' => 'journal-member-preferences-headcover',
 			'editor_style' => 'journal-member-preferences-headcover',
 			'render_callback' => [$this, 'render' ],
-			'attributes' => []
+			'attributes' => [
+				'setPage' => [
+					'type' => 'number',
+					'default' => 0
+				],
+			]
 		));
 	}
 
@@ -95,8 +101,17 @@ class JC_Member_Preferences_Headcover {
 	 */
 	public function render( $attr, $content ){
 
+		$snake_attr = [];
+
+		foreach ( $attr as $key => $value ) {
+            $snake_key = $this->from_camel_case( $key );
+            $snake_key = str_replace( 'custom_', '', $snake_key );
+
+			$snake_attr[$snake_key] = $value;
+		}
+
 		if ( is_user_logged_in() ) {
-			return $this->preference_form();
+			return $this->preference_form( $snake_attr );
 		} else {
 			return '';
 		}
@@ -104,11 +119,31 @@ class JC_Member_Preferences_Headcover {
 	}
 
 	/**
+	 * Undocumented function
+	 *
+	 * @param [type] $str
+	 * @return void
+	 */
+	private function from_camel_case( $str ) {
+		$str[0] = strtolower($str[0]);
+		return preg_replace_callback(
+			'/([A-Z])/', 
+			function( $c ) { return "_" . strtolower( $c[1]);}, 
+			$str);
+	}
+
+	/**
 	 * [feature description]
 	 * @param  [type] $attr [description]
 	 * @return [type]       [description]
 	 */
-	public function preference_form() {
+	public function preference_form( $attr ) {
+
+		$defaults = [
+			'set_page' => jc_get_option( 'headcover_redirect_page', false, 'preferences' )
+		];
+
+		$options = shortcode_atts( $defaults, $attr );
 
 		wp_enqueue_style( 'journal-member-preferences-public' );
 		ob_start();
@@ -146,6 +181,7 @@ class JC_Member_Preferences_Headcover {
 						<label for="black">Black</label>
 					</div>
 					<input type="hidden" name="headcover_selection" value=1/>
+					<input type="hidden" name="set_page" value="<?php echo $options['set_page'];?>"/>
                     <input type="submit" class="button" value="Save Preference"/>
                 </form>
 
@@ -172,15 +208,11 @@ class JC_Member_Preferences_Headcover {
 			return;
 		}
 
-		error_log( "in handle submission " . print_r( $_POST, true )  );
-
 		if ( !(isset( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( $_REQUEST['_wpnonce'], 'jc-preference-headcover' ) ) ) {
-			error_log( "failed nonce check" );
 			return;
 		}
 
 		if ( !is_user_logged_in() ) {
-			error_log( 'user not logged in ' );
 			return;
 		}
 
@@ -189,8 +221,7 @@ class JC_Member_Preferences_Headcover {
 		// Set the data 
 		update_user_meta( $user_id, 'jc_headcover', $_POST['headcover'] );
 
-		$redirect_url = get_permalink( jc_get_option( 'headcover_redirect_page', false, 'preferences' ) );
-		error_log( 'redirecting to ' . $redirect_url );
+		$redirect_url =  get_permalink( $_POST['set_page'] );
 
 		if ( $redirect_url ) {
 			wp_redirect( add_query_arg( [ 'selection' => $_POST['headcover'] ], $redirect_url ) );
