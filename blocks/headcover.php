@@ -180,7 +180,7 @@ class JC_Member_Preferences_Headcover {
 						if ( $checked === 'black' ) echo 'checked';?>/>
 						<label for="black">Black</label>
 					</div>
-					<input type="hidden" name="headcover_selection" value=1/>
+					<input type="hidden" name="headcover_selection" value="1"/>
 					<input type="hidden" name="set_page" value="<?php echo $options['set_page'];?>"/>
                     <input type="submit" class="button primary" value="Save Preference"/>
                 </form>
