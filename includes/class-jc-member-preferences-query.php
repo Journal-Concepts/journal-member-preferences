@@ -122,6 +122,7 @@ class JC_Member_Preferences_Query extends WC_Query {
 
 			if ( isset( $_POST['headcover'] ) ) {
 				update_user_meta( $user_id, 'jc_headcover', $_POST['headcover']);
+				as_enqueue_async_action( 'jc_preference_selected', [$user_id, 'Headcover Preference', $_POST['headcover']] );
 				$message = "Your preferences have been updated";
 			} 
 
