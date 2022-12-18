@@ -220,6 +220,7 @@ class JC_Member_Preferences_Headcover {
 
 		// Set the data 
 		update_user_meta( $user_id, 'jc_headcover', $_POST['headcover'] );
+		as_enqueue_async_action( 'jc_preference_selected', $user_id, 'Headcover Preference', $_POST['headcover'] );
 
 		$redirect_url =  get_permalink( $_POST['set_page'] );
 
