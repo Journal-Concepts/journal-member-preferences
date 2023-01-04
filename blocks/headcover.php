@@ -173,9 +173,6 @@ class JC_Member_Preferences_Headcover {
 						<input type="radio" id="tan" name="headcover" value="tan" <?php 
 						if ( !in_array( $checked, [ 'white', 'black' ] ) ) echo 'checked';?> />
 						<label for="tan">Tan</label>
-						<input type="radio" id="white" name="headcover" value="white" <?php 
-						if ( $checked === 'white' ) echo 'checked';?>/>
-						<label for="white">White</label>
 						<input type="radio" id="black" name="headcover" value="black" <?php 
 						if ( $checked === 'black' ) echo 'checked';?>/>
 						<label for="black">Black</label>
