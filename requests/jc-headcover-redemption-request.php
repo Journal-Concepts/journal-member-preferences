@@ -70,7 +70,7 @@ class JC_Headcover_Redemption_Request extends JC_Async_Report_Request {
 
 		$data_store = WC_Data_Store::load( 'journal_premium_entitlement' );
 
-		$entitlements = $data_store->get_entitlements_for_number( 6, 'unredeemed', $this->per_step, $offset, $cutoff );
+		$entitlements = $data_store->get_entitlements_for_number( 6, 'unredeemed', $this->per_step, $offset, $cutoff, 'renewal' );
 
         return $entitlements;
     }
