@@ -15,7 +15,7 @@
 class JC_Putter_Cover_Redemption_Request extends JC_Async_Report_Request {
 
     protected $action = "putter_cover_redemption_request";
-	protected $per_step = 20;
+	protected $per_step = 100;
 
     protected $context = [
         'source' => 'JC Putter Cover Redemptions'
@@ -117,11 +117,11 @@ class JC_Putter_Cover_Redemption_Request extends JC_Async_Report_Request {
 			return [];
 		}
 
-		//$offset = 1 == $step ? 0 : $this->per_step * ( $step - 1);
+		$offset = 1 == $step ? 0 : $this->per_step * ( $step - 1);
 
 		$data_store = WC_Data_Store::load( 'journal_premium_entitlement' );
 
-		$entitlements = $data_store->get_entitlements_for_number( 6, 'unredeemed', $this->per_step, 0, $cutoff, 'new' );
+		$entitlements = $data_store->get_entitlements_for_number( 6, 'unredeemed', $this->per_step, $offset, $cutoff, 'new' );
 
         return $entitlements;
     }
@@ -227,7 +227,7 @@ class JC_Putter_Cover_Redemption_Request extends JC_Async_Report_Request {
 			$product = wc_get_product( $variation_id );
 
 			if ( !$product ) {
-				wc_get_logger()->warning( 'No a product for ' . $variation_id, $this->context );
+				wc_get_logger()->warning( 'Not a product for ' . $variation_id, $this->context );
 				continue;
 			}
 
