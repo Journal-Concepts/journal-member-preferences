@@ -117,11 +117,11 @@ class JC_Putter_Cover_Redemption_Request extends JC_Async_Report_Request {
 			return [];
 		}
 
-		$offset = 1 == $step ? 0 : $this->per_step * ( $step - 1);
+		//$offset = 1 == $step ? 0 : $this->per_step * ( $step - 1);
 
 		$data_store = WC_Data_Store::load( 'journal_premium_entitlement' );
 
-		$entitlements = $data_store->get_entitlements_for_number( 6, 'unredeemed', $this->per_step, $offset, $cutoff, 'new' );
+		$entitlements = $data_store->get_entitlements_for_number( 6, 'unredeemed', $this->per_step, 0, $cutoff, 'new' );
 
         return $entitlements;
     }
@@ -166,6 +166,10 @@ class JC_Putter_Cover_Redemption_Request extends JC_Async_Report_Request {
         $fp = fopen( $downloads[0]->filename, 'a' );
 
 		foreach ( $data as $entitlement ) {
+
+			if ( $entitlement->get_redemption_date() != NULL ) {
+				wc_get_logger()->warning( "Entitlement already redeemed #" . $entitlement->get_id(), $this->context );
+			}
 
 			$current_levels = $context['current_levels'];
 
