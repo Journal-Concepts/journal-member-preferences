@@ -15,7 +15,7 @@
 class JC_Headcover_Redemption_Request extends JC_Async_Report_Request {
 
     protected $action = "headcover_redemption_request";
-	protected $per_step = 20;
+	protected $per_step = 100;
 
     protected $context = [
         'source' => 'JC Headcover Redemptions'
@@ -70,7 +70,7 @@ class JC_Headcover_Redemption_Request extends JC_Async_Report_Request {
 
 		$data_store = WC_Data_Store::load( 'journal_premium_entitlement' );
 
-		$entitlements = $data_store->get_entitlements_for_number( 6, 'unredeemed', $this->per_step, $offset, $cutoff, 'renewal' );
+		$entitlements = $data_store->get_entitlements_for_redemption( 6, $this->per_step, $offset, $cutoff, 'renewal' );
 
         return $entitlements;
     }
