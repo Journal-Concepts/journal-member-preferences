@@ -15,7 +15,7 @@
 class JC_Headcover_Redemption_Request extends JC_Async_Report_Request {
 
     protected $action = "headcover_redemption_request";
-	protected $per_step = 100;
+	protected $per_step = 50;
 
     protected $context = [
         'source' => 'JC Headcover Redemptions'

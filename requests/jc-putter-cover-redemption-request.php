@@ -15,7 +15,7 @@
 class JC_Putter_Cover_Redemption_Request extends JC_Async_Report_Request {
 
     protected $action = "putter_cover_redemption_request";
-	protected $per_step = 100;
+	protected $per_step = 50;
 
     protected $context = [
         'source' => 'JC Putter Cover Redemptions'
