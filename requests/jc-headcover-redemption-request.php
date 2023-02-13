@@ -71,7 +71,7 @@ class JC_Headcover_Redemption_Request extends JC_Async_Report_Request {
 		$data_store = WC_Data_Store::load( 'journal_premium_entitlement' );
 
 		// Add back in 'renewal' parameter -- To Do after Tim pulls on 13 Feb 2023
-		$entitlements = $data_store->get_entitlements_for_redemption( 6, $this->per_step, $offset, $cutoff );
+		$entitlements = $data_store->get_entitlements_for_number( 6, 'all', $this->per_step, $offset, $cutoff );
 
         return $entitlements;
     }
@@ -105,15 +105,14 @@ class JC_Headcover_Redemption_Request extends JC_Async_Report_Request {
 
 		foreach ( $data as $entitlement ) {
 
+			if ( $entitlement->get_redemption_date() != NULL || $entitlement->get_redemption_order_id() != '' ) {
+				continue;
+			}
+
 			// Check whether we've reached the limit
 			if ( max( $context['current_levels'] ) <= 0 ) {
 				wc_get_logger()->info( 'Current levels exhausted ' . print_r( $context, true ), $this->context );
 				break;
-			}
-
-			if ( $entitlement->get_redemption_order_id() != '' ) {
-				wc_get_logger()->warning( "already redeemed " . $entitlement->get_id() );
-				continue;
 			}
 
 			// Get the preferred colour
