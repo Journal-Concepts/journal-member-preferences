@@ -70,7 +70,8 @@ class JC_Headcover_Redemption_Request extends JC_Async_Report_Request {
 
 		$data_store = WC_Data_Store::load( 'journal_premium_entitlement' );
 
-		$entitlements = $data_store->get_entitlements_for_redemption( 6, $this->per_step, $offset, $cutoff, 'renewal' );
+		// Add back in 'renewal' parameter -- To Do after Tim pulls on 13 Feb 2023
+		$entitlements = $data_store->get_entitlements_for_redemption( 6, $this->per_step, $offset, $cutoff );
 
         return $entitlements;
     }
