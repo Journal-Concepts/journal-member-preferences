@@ -213,6 +213,7 @@ class JC_Member_Preferences_Putter_Type {
 
 		// Set the data 
 		update_user_meta( $user_id, 'jc_putter_type', $_POST['putter_type'] );
+		as_enqueue_async_action( 'jc_preference_selected', [$user_id, 'Putter Cover Preference', $_POST['putter_type']] );
 
 		$response->add( [
 			'data' => 'success',
