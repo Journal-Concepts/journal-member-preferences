@@ -121,7 +121,7 @@ class JC_Putter_Cover_Redemption_Request extends JC_Async_Report_Request {
 
 		$data_store = WC_Data_Store::load( 'journal_premium_entitlement' );
 
-		$entitlements = $data_store->get_entitlements_for_redemption( 6, $this->per_step, $offset, $cutoff, 'new' );
+		$entitlements = $data_store->get_entitlements_for_number( 6, 'all', $this->per_step, $offset, $cutoff, 'new' );
 
         return $entitlements;
     }
@@ -167,9 +167,18 @@ class JC_Putter_Cover_Redemption_Request extends JC_Async_Report_Request {
 
 		foreach ( $data as $entitlement ) {
 
-			if ( $entitlement->get_redemption_date() != NULL ) {
-				wc_get_logger()->warning( "Entitlement already redeemed #" . $entitlement->get_id(), $this->context );
+			if ( $entitlement->get_redemption_date() != NULL || $entitlement->get_redemption_order_id() != '' ) {
+				continue;
 			}
+
+			// skip orders that occurred before 13 Feb 2022
+			$date_bought = new DateTime( $entitlement->get_date_bought() );
+			$ignore_date = new DateTime( '2022-02-13' );
+			
+			if ( $date_bought < $ignore_date ) {
+				continue;
+			}
+
 
 			$current_levels = $context['current_levels'];
 
