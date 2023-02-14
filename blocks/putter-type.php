@@ -144,9 +144,17 @@ class JC_Member_Preferences_Putter_Type {
 						<input type="radio" id="mallet" name="putter-type" value="mallet" <?php 
 						if ( $checked === 'mallet' ) echo 'checked';?>/>
 						<label for="mallet">Mallet</label>
+
+						<?php 
+						if ( $checked === 'square-mallet' ) {
+							?>
 						<input type="radio" id="square-mallet" name="putter-type" value="square-mallet" <?php 
 						if ( $checked === 'square-mallet' ) echo 'checked';?>/>
 						<label for="square-mallet">Square Mallet</label>
+						<?php
+						}
+						?>
+
 					</div>
                     <input type="submit" class="button" value="Save Choice"/>
                 </form>
