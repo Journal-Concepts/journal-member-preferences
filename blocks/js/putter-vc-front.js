@@ -85,6 +85,7 @@
     $(function() {
 
 		var baseAction = 'jc_putter_cover_report';
+		var sixAction = 'jc_putter_cover_report_six';
 		var $reports = $('.async-report-vc .reports');
 
 		$('#generate-report').click( function(e) {
@@ -93,6 +94,15 @@
 			var data = '';
 			e.preventDefault();
 			generateReport( nonce, data, baseAction, $reports );
+
+		});
+
+		$('#generate-report-six').click( function(e) {
+
+			var nonce = '';
+			var data = '';
+			e.preventDefault();
+			generateReport( nonce, data, sixAction, $reports );
 
 		});
 

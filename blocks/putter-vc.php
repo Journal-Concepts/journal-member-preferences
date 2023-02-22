@@ -114,7 +114,8 @@ class JC_Member_Preferences_Putter_VC {
 		
 			<div class="control">
 		
-				<a class="button" id="generate-report" href="#">Generate Report</a>
+				<a class="button" id="generate-report" href="#">Generate Report</a><br/>
+				<a class="button" id="generate-report-six" href="#">Generate Report - Entitlement 6</a>
 
 				<form id="redeem-covers" name="redeem-covers" method="post">
 					<?php wp_nonce_field( 'jc-preference-redeem-covers' );?>

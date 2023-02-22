@@ -150,6 +150,9 @@ class JC_Member_Preferences {
 
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'requests/jc-putter-cover-report-request.php';
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'controllers/jc-putter-cover-report-controller.php';
+
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'requests/jc-putter-cover-report-request-six.php';
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'controllers/jc-putter-cover-report-controller-six.php';
 	
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'requests/jc-putter-cover-redemption-request.php';
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'controllers/jc-putter-cover-redemption-controller.php';
