@@ -66,7 +66,7 @@ class JC_Putter_Cover_Report_Request_Six extends JC_Async_Report_Request {
 			$date_bought = new DateTime( $entitlement->get_date_bought() );
 			$ignore_date = new DateTime( '2023-02-13' );
 
-			error_log ( sprintf( 'entitlement %1%d bought %2$s  ignore %3$s', 
+			error_log ( sprintf( 'entitlement %1$d bought %2$s  ignore %3$s', 
 			$entitlement->get_id(),
 			$date_bought->format('Y-m-d H:i:s'),
 			$ignore_date->format('Y-m-d H:i:s' )
@@ -74,6 +74,7 @@ class JC_Putter_Cover_Report_Request_Six extends JC_Async_Report_Request {
 
 			
 			if ( $date_bought < $ignore_date ) {
+				error_log( 'skipping');
 				continue;
 			}
 
