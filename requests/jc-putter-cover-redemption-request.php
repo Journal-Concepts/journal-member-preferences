@@ -173,7 +173,7 @@ class JC_Putter_Cover_Redemption_Request extends JC_Async_Report_Request {
 
 			// skip orders that occurred before 13 Feb 2022
 			$date_bought = new DateTime( $entitlement->get_date_bought() );
-			$ignore_date = new DateTime( '2022-02-13' );
+			$ignore_date = new DateTime( '2023-02-13' );
 			
 			if ( $date_bought < $ignore_date ) {
 				continue;
