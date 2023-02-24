@@ -159,6 +159,10 @@ class JC_Member_Preferences {
 
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'requests/jc-headcover-report-request.php';
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'controllers/jc-headcover-report-controller.php';
+
+
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'requests/jc-headcover-report-request-renewals.php';
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'controllers/jc-headcover-report-controller-renewals.php';
 	
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'requests/jc-headcover-redemption-request.php';
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'controllers/jc-headcover-redemption-controller.php';

@@ -85,6 +85,7 @@
     $(function() {
 
 		var baseAction = 'jc_headcover_report';
+		var renewalsAction = 'jc_headcover_report_renewals';
 		var $reports = $('.async-report-vc .reports');
 
 		$('#generate-headcover-report').click( function(e) {
@@ -93,6 +94,15 @@
 			var data = '';
 			e.preventDefault();
 			generateReport( nonce, data, baseAction, $reports );
+
+		});
+
+		$('#generate-headcover-report-renewals').click( function(e) {
+
+			var nonce = '';
+			var data = '';
+			e.preventDefault();
+			generateReport( nonce, data, renewalsAction, $reports );
 
 		});
 

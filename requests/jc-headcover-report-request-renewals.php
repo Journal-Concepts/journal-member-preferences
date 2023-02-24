@@ -10,12 +10,12 @@
 //use DeliciousBrains\WP_Offload_Media\Aws3\Aws\WrappedHttpHandler;
 
 /**
- * JC_Headcover_Report_Request class.
+ * JC_Headcover_Report_Request_Renewals class.
  *
  */
-class JC_Headcover_Report_Request extends JC_Async_Report_Request {
+class JC_Headcover_Report_Request_Renewals extends JC_Async_Report_Request {
 
-    protected $action = "headcover_report_request";
+    protected $action = "headcover_report_request_renewals";
 
     protected $context = [
         'source' => 'JC Headcover Reports'
@@ -34,7 +34,7 @@ class JC_Headcover_Report_Request extends JC_Async_Report_Request {
 
 		$data_store = WC_Data_Store::load( 'journal_premium_entitlement' );
 
-		$entitlements = $data_store->get_entitlements_for_number( 6, 'all', $this->per_step, $offset, "2023-02-12" );
+		$entitlements = $data_store->get_entitlements_for_number( 6, 'all', $this->per_step, $offset, '', 'renewal' );
 
         return $entitlements;
     }
@@ -59,6 +59,22 @@ class JC_Headcover_Report_Request extends JC_Async_Report_Request {
         $fp = fopen( $downloads[0]->filename, 'a' );
 
 		foreach ( $data as $entitlement ) {
+
+            // skip orders that occurred before 13 Feb 2022
+			$date_bought = new DateTime( $entitlement->get_date_bought() );
+			$ignore_date = new DateTime( '2023-02-13' );
+
+			error_log ( sprintf( 'entitlement %1$d bought %2$s  ignore %3$s', 
+                $entitlement->get_id(),
+                $date_bought->format('Y-m-d H:i:s'),
+                $ignore_date->format('Y-m-d H:i:s' )
+            ));
+
+			
+			if ( $date_bought < $ignore_date ) {
+				error_log( 'skipping');
+				continue;
+			}
 
 			$subscription = wcs_get_subscription( $entitlement->get_subscription_id() );
 
@@ -120,5 +136,5 @@ class JC_Headcover_Report_Request extends JC_Async_Report_Request {
 
 // Load the main request class.
 
-JC_Registry::set_instance( 'headcover-report', new JC_Headcover_Report_Request());
-$request = JC_Registry::get_instance( 'headcover-report' );
+JC_Registry::set_instance( 'headcover-report-renewals', new JC_Headcover_Report_Request_Renewals());
+$request = JC_Registry::get_instance( 'headcover-report-renewals' );

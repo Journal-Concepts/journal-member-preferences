@@ -115,6 +115,7 @@ class JC_Member_Preferences_Headcover_VC {
 			<div class="control">
 		
 				<a class="button" id="generate-headcover-report" href="#">Generate Status Report</a>
+				<a class="button" id="generate-headcover-report-renewals" href="#">Generate Report - Post 2023-02-12</a>
 				<hr/>
 
 				<form id="redeem-headcovers" name="redeem-headcovers" method="post">
