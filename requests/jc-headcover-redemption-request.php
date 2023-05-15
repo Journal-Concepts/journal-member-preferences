@@ -70,8 +70,7 @@ class JC_Headcover_Redemption_Request extends JC_Async_Report_Request {
 
 		$data_store = WC_Data_Store::load( 'journal_premium_entitlement' );
 
-		// Note: we'll need to support new when we handle the no preference orders (as of 13 Feb 2023), when the new stock arrives
-		$entitlements = $data_store->get_entitlements_for_number( 6, 'all', $this->per_step, $offset, $cutoff, 'renewal' );
+		$entitlements = $data_store->get_entitlements_for_number( 6, 'all', $this->per_step, $offset, $cutoff);
 
         return $entitlements;
     }
