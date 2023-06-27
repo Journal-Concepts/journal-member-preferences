@@ -100,7 +100,6 @@ class JC_Headcover_Redemption_Request extends JC_Async_Report_Request {
 
         $fp = fopen( $downloads[0]->filename, 'a' );
 
-		wc_get_logger()->info( 'Current levels ' . print_r( $context, true ), $this->context );
 
 		foreach ( $data as $entitlement ) {
 

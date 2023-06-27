@@ -24,9 +24,11 @@ class JC_Member_Preferences_Query extends WC_Query {
 			add_filter( 'woocommerce_get_query_vars', [ $this, 'add_jc_member_preferences_query_vars' ] );
 
 			// Inserting your new tab/page into the My Account page.
-			add_filter( 'woocommerce_endpoint_'  . $this->url . '_title', array($this, 'title'), 0);
-			add_filter( 'woocommerce_account_menu_items', [ $this, 'add_menu_items' ] );
-			add_action( 'woocommerce_account_' . $this->url . '_endpoint', [ $this, 'endpoint_content' ] );
+			if ( current_user_can( 'subscriber' ) ) {
+				add_filter( 'woocommerce_endpoint_'  . $this->url . '_title', array($this, 'title'), 0);
+				add_filter( 'woocommerce_account_menu_items', [ $this, 'add_menu_items' ] );
+				add_action( 'woocommerce_account_' . $this->url . '_endpoint', [ $this, 'endpoint_content' ] );
+			}
 
 		}
 
